@@ -1,0 +1,21 @@
+.icon-default {
+    background-size: contain;
+    background-repeat: no-repeat;
+    margin-right: 0px;
+    background-image: ;
+    background-position: center;
+}
+
+.icon-search {
+    background-image: url('../../Resource/icon/search.png');
+    background-position: 16px center;
+    background-repeat: no-repeat;
+}
+
+.icon-add {
+    width: 20px;
+    height: 20px;
+    margin-right: 8px;
+    background-position: 0 center;
+    background-image: url('../../Resource/icon/add.png');
+}

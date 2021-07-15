@@ -1,0 +1,60 @@
+.menu {
+    width: 225px;
+    height: calc(100vh - 48px);
+    border-right: 1px solid #E5E5E5E5;
+}
+
+.menu .menu-item {
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    height: 44px;
+    width: 100%;
+    background-color: #ffffff;
+    padding-left: 16px;
+    box-sizing: border-box;
+    cursor: pointer;
+}
+
+.menu .menu-item:hover {
+    background-color: #e5e5e5e5;
+    color: black;
+}
+
+.menu .menu-item-active {
+    background-color: #019160;
+    color: #ffffff;
+}
+
+.menu .menu-item:visited {
+    color: none;
+}
+
+.menu .menu-item .menu-item-text {
+    font-family: GoogleSans-Regular;
+    font-size: 13px;
+}
+
+.menu .menu-item .menu-icon {
+    width: 20px;
+    height: 20px;
+    /* background-color: #ffffff; */
+    margin-right: 10px;
+    background-size: contain;
+}
+
+.menu-icon.icon-dashboard {
+    background-image: url('../../Resource/icon/dashboard.png');
+}
+
+.menu-icon.icon-report {
+    background-image: url('../../Resource/icon/report.png');
+}
+
+.menu-icon.icon-setting {
+    background-image: url('../../Resource/icon/setting.png');
+}
+
+.menu-icon.icon-employee {
+    background-image: url('../../Resource/icon/dic-employee.png');
+}

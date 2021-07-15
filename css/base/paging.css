@@ -1,0 +1,29 @@
+.paging {
+    height: 56px;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    /* justify-content: space-between; */
+}
+
+.paging .paging-left {
+    /* align-self: flex-start; */
+    /* flex: 1; */
+    justify-self: ;
+    min-width: 200px;
+    height: 100%;
+    background-color: teal;
+}
+
+.paging .paging-right {
+    min-width: 200px;
+    height: 100%;
+    background-color: tomato;
+}
+
+.paging .paging-bar {
+    min-width: 200px;
+    height: 100%;
+    width: 100%;
+    background-color: violet;
+}

@@ -1,0 +1,43 @@
+@import url('../css/base/button.css');
+@import url('../css/base/text-box.css');
+@import url('../css/base/icon.css');
+@import url('../css/layout/header.css');
+@import url('../css/layout/menu.css');
+@import url('../css/layout/content.css');
+@import url('../css/base/variable.css');
+@font-face {
+    font-family: 'GoogleSans-Medium';
+    src: url(../Resource/font/GoogleSans-Medium.otf);
+}
+
+@font-face {
+    font-family: 'GoogleSans-Regular';
+    src: url(../Resource/font/GoogleSans-Regular.otf);
+}
+
+@font-face {
+    font-family: 'GoogleSans-Bold';
+    src: url(../Resource/font/GoogleSans-Bold.otf);
+}
+
+body {
+    height: 100vh;
+    padding: 0px;
+    margin: 0px;
+    font-family: GoogleSans-Regular;
+}
+
+.content {
+    min-width: 500px;
+    position: absolute;
+    top: 48px;
+    left: 226px;
+    padding: 16px 16px 0 16px;
+    height: calc(100vh - 48px);
+    width: calc(100vw - 226px);
+    box-sizing: border-box;
+    background-color: var(--bg-color);
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+}

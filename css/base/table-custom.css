@@ -1,0 +1,50 @@
+@import url('custom-scroll.css');
+.table-custom {
+    width: 100%;
+    overflow: scroll;
+    font-size: 13px;
+}
+
+.table-header {
+    position: sticky;
+    top: 0;
+    background-color: var(--object-color) !important;
+    width: 100%;
+    height: 40px;
+    white-space: nowrap;
+    box-shadow: #bbbbbb;
+}
+
+.table-custom table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.table-custom table th,
+td {
+    text-align: left;
+    /* padding: 8px; */
+}
+
+.table-custom table tr {
+    /* background-color: var(--object-color); */
+    height: 2.2em;
+    border-bottom: 1px solid var(--border-item-color);
+}
+
+.table-custom table tr:hover {
+    background-color: #E9EBEE;
+}
+
+.table-custom table .row-selected {}
+
+
+/* .table-custom table tbody tr:nth-child(odd) {
+    background-color: #f2f2f2;
+} */
+
+.table-custom table tbody {
+    /* height: calc(100% - 40px); */
+    /* overflow: scroll; */
+    white-space: nowrap;
+}
