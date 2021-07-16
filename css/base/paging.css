@@ -90,6 +90,7 @@
 .paging-bar .btn-paging-base:hover {
     background-color: var(--object-color);
     border: none;
+    color: #000;
 }
 
 .paging-bar .btn-prev-page {
@@ -131,4 +132,5 @@
 
 .paging-bar .btn-page-number-active {
     background-color: #019160;
+    color: #ffffff;
 }

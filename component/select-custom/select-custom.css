@@ -1,17 +1,36 @@
-@import url('custom-scroll.css');
+@import url('../../css/base/custom-scroll.css');
 .select-box select {
     display: none;
     /*hide original SELECT element:*/
 }
 
 
+/*style the items-container (options), including the selected item:*/
+
+.select-selected {
+    height: 40px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.select-selected {
+    /* color: #000000; */
+    padding-left: 16px;
+    /* padding: 10px 16px; */
+    border: 1px solid transparent;
+    border-color: #BBBBBB;
+    cursor: pointer;
+    user-select: none;
+    border-radius: 4px;
+    box-sizing: border-box;
+    background-color: var(--object-color);
+}
+
+
 /*style the arrow inside the select element:*/
 
 .select-selected:after {
-    /* position: absolute;
-    content: "";
-    top: 0px;
-    right: 0px; */
     content: "";
     width: 40px;
     height: 40px;
@@ -32,31 +51,8 @@
     border-color: #019160;
 }
 
-
-/*style the items-container (options), including the selected item:*/
-
-.select-selected {
-    height: 40px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-}
-
-.select-selected {
-    color: #000000;
-    padding-left: 16px;
-    /* padding: 10px 16px; */
-    border: 1px solid transparent;
-    border-color: #BBBBBB;
-    cursor: pointer;
-    user-select: none;
-    border-radius: 4px;
-    box-sizing: border-box;
-    background-color: var(--object-color);
-}
-
 .select-items {
-    color: #000000;
+    /* color: #000000; */
     padding: 2px 0px;
     border: 1px solid #bbbbbb;
     border-radius: 4px;
@@ -65,12 +61,32 @@
     background-color: #ffffff;
 }
 
+
+/* custom selected item */
+
+.same-as-selected {
+    color: #ffffff;
+    position: relative;
+    background-color: #019160;
+}
+
+
+/* custom list-item */
+
 .select-items div {
-    color: #000000;
+    /* color: #000000; */
     padding: 10px 16px 10px 30px;
     border-top: 1px solid #bbbbbb;
     cursor: pointer;
     user-select: none;
+}
+
+
+/* hover option */
+
+.select-items div:hover {
+    background-color: #E9EBEE;
+    color: #000;
 }
 
 
@@ -93,20 +109,7 @@
     display: none;
 }
 
-
-/* hover option */
-
-.select-items div:hover {
-    background-color: #E9EBEE;
-}
-
-.same-as-selected {
-    position: relative;
-    background-color: #019160;
-}
-
 .same-as-selected i {
-    color: var(--object-color);
     position: absolute;
     left: 10px;
     /* center vertical */

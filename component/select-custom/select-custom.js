@@ -1,66 +1,92 @@
-var select_box, i, j, l, ll, selElmnt, select_selected, select_dropdown_container, option;
+// var select_boxes, selElmnt, select_selected, select_dropdown_container, option;
 var class_icon = "fal fa-check";
 /*look for any elements with the class "custom-select":*/
-select_box = document.getElementsByClassName("select-box");
-l = select_box.length;
-for (i = 0; i < l; i++) {
-    selElmnt = select_box[i].getElementsByTagName("select")[0];
-    ll = selElmnt.length;
+var select_boxes = document.querySelectorAll(".select-box");
+
+select_boxes.forEach(select_box => {
+
+    var selElmnt = select_box.querySelector("select");
     /*for each element, create a new DIV that will act as the selected item:*/
-    select_selected = document.createElement("DIV");
+    var select_selected = document.createElement("DIV");
     select_selected.setAttribute("class", "select-selected");
     select_selected.innerHTML = selElmnt.options[selElmnt.selectedIndex].innerHTML;
-    select_box[i].appendChild(select_selected);
+    select_box.appendChild(select_selected);
     /*for each element, create a new DIV that will contain the option list:*/
-    select_dropdown_container = document.createElement("DIV");
+    var select_dropdown_container = document.createElement("DIV");
     select_dropdown_container.setAttribute("class", "select-items select-hide");
 
-    for (j = 0; j < ll; j++) {
-        /*for each option in the original select element,
-        create a new DIV that will act as an option item:*/
 
-        option = document.createElement("DIV");
-        if (j == 0) {
+    var options = selElmnt.querySelectorAll("option");
+    options.forEach((child_selElemnt, index) => {
+        var option = document.createElement("DIV");
+        if (index == 0) {
             option.setAttribute("style", "border:none;");
         }
-        option.innerHTML = selElmnt.options[j].innerHTML;
+        option.innerHTML = child_selElemnt.innerHTML;
+        select_dropdown_container.appendChild(option);
+
+        /*you can put this code anywhere in this js file to refactor code but slower
+        , just find all .select-selected and set to select_selected*/
+        //start
         option.addEventListener("click", function(e) {
             /*when an item is clicked, update the original select box,
-            and the selected item:*/
-            var y, i, k, s, h, sl, yl;
-            s = this.parentNode.parentNode.getElementsByTagName("select")[0];
-            sl = s.length;
-            h = this.parentNode.previousSibling;
-            for (i = 0; i < sl; i++) {
-                if (s.options[i].innerHTML == this.innerHTML) {
-                    s.selectedIndex = i;
-                    h.innerHTML = this.innerHTML;
-                    y = this.parentNode.getElementsByClassName("same-as-selected");
-                    yl = y.length;
-                    for (k = 0; k < yl; k++) {
-                        var icon = y[k].getElementsByTagName("I")[0];
-                        y[k].removeChild(icon); //delete check icon
-                        y[k].removeAttribute("class");
-                    }
-
+                        and the selected item:*/
+            var same_as_selected, selElmnt, select_selected;
+            selElmnt = this.parentNode.parentNode.querySelector("select");
+            select_selected = this.parentNode.previousSibling; //get select-selected
+            select_length = selElmnt.length;
+            var options = selElmnt.querySelectorAll("option");
+            Array.from(options).every((opt, i) => {
+                if (opt.innerHTML == this.innerHTML) {
+                    selElmnt.selectedIndex = i;
+                    select_selected.innerHTML = this.innerHTML;
+                    same_as_selected = this.parentNode.querySelectorAll(".same-as-selected");
+                    same_as_selected.forEach(item_same => {
+                        item_same.removeChild(item_same.querySelector("i")); // remove checked icon
+                        item_same.removeAttribute("class"); //remove class show checked row
+                    });
                     this.setAttribute("class", "same-as-selected");
-                    console.log(this);
+
                     //add check icon
                     var icon = document.createElement("I");
                     icon.setAttribute("class", class_icon);
                     this.insertBefore(icon, this.childNodes[0]);
-
-                    // console.log(this);
-                    break;
+                    return false;
                 }
-            }
+                return true;
 
-            h.click();
+            });
+
+            // for (var i = 0; i < select_length; i++) {
+            //     if (selElmnt.options[i].innerHTML == this.innerHTML) {
+            //         selElmnt.selectedIndex = i;
+            //         select_selected.innerHTML = this.innerHTML;
+            //         same_as_selected = this.parentNode.querySelectorAll(".same-as-selected");
+            //         same_as_selected.forEach(item_same => {
+            //             item_same.removeChild(item_same.querySelector("i")); // remove checked icon
+            //             item_same.removeAttribute("class"); //remove class show checked row
+            //         });
+            //         this.setAttribute("class", "same-as-selected");
+            //         //add check icon
+            //         var icon = document.createElement("I");
+            //         icon.setAttribute("class", class_icon);
+            //         this.insertBefore(icon, this.childNodes[0]);
+            //         break;
+            //     }
+            //     console.log(option);
+            // }
+
+            select_selected.click();
         });
-        select_dropdown_container.appendChild(option);
-    }
-    select_box[i].appendChild(select_dropdown_container);
+        //end
+    });
 
+
+    select_box.appendChild(select_dropdown_container);
+
+    /*you can put this code anywhere in this js file to refactor code but slower
+    , just find all .select-selected and set to select_selected*/
+    //start
     select_selected.addEventListener("click", function(e) {
         /*when the select box is clicked, close any other select boxes,
         and open/close the current select box:*/
@@ -69,7 +95,9 @@ for (i = 0; i < l; i++) {
         this.nextSibling.classList.toggle("select-hide");
         this.classList.toggle("select-arrow-active");
     });
-}
+    //end
+
+});
 
 function closeAllSelect(elmnt) {
     /*a function that will close all select boxes in the document,
@@ -91,7 +119,9 @@ function closeAllSelect(elmnt) {
             x[i].classList.add("select-hide");
         }
     }
+
 }
+
 /*if the user clicks anywhere outside the select box,
 then close all select boxes:*/
 document.addEventListener("click", closeAllSelect);
