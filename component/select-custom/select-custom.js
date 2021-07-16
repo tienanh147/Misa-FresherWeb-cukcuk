@@ -1,4 +1,5 @@
 var select_box, i, j, l, ll, selElmnt, select_selected, select_dropdown_container, option;
+var class_icon = "fal fa-check";
 /*look for any elements with the class "custom-select":*/
 select_box = document.getElementsByClassName("select-box");
 l = select_box.length;
@@ -46,7 +47,7 @@ for (i = 0; i < l; i++) {
                     console.log(this);
                     //add check icon
                     var icon = document.createElement("I");
-                    icon.setAttribute("class", "fas fa-check");
+                    icon.setAttribute("class", class_icon);
                     this.insertBefore(icon, this.childNodes[0]);
 
                     // console.log(this);
