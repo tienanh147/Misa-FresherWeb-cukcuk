@@ -27,7 +27,7 @@
 }
 
 .menu .menu-item:visited {
-    color: none;
+    color: transparent;
 }
 
 .menu .menu-item .menu-item-text {

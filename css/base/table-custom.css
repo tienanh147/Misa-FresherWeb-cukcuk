@@ -23,7 +23,7 @@
 .table-custom table th,
 td {
     text-align: left;
-    /* padding: 8px; */
+    padding-right: 8px;
 }
 
 .table-custom table tr {
@@ -35,6 +35,8 @@ td {
 .table-custom table tr:hover {
     background-color: #E9EBEE;
 }
+
+.table-custom table tr>:first-child {}
 
 .table-custom table .row-selected {}
 

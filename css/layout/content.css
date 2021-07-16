@@ -28,7 +28,7 @@
     height: 40px;
     justify-content: space-between;
     margin-bottom: 10px;
-    background-color: var(--object-color);
+    background-color: var(--bg-color);
 }
 
 .content .header-content .page-title {
@@ -38,7 +38,9 @@
     margin-right: 16px;
 }
 
-.content .header-content .page-feature {}
+.content .header-content .page-feature {
+    min-width: 75px;
+}
 
 
 /* filer */

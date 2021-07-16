@@ -1,4 +1,4 @@
-@import url('select-custom.css');
+@import url('../../component/select-custom/select-custom.css');
 .filter .filter-bar {
     flex: 0.7;
     display: flex;
