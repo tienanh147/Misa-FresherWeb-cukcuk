@@ -1,0 +1,9 @@
+.form-content .form-input-info {
+    flex: 1;
+    height: 100px;
+    width: 100%;
+    overflow: scroll;
+    font-size: 13px;
+    display: flex;
+    flex-direction: column;
+}

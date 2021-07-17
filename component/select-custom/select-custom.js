@@ -15,7 +15,7 @@ select_boxes.forEach(select_box => {
     var select_dropdown_container = document.createElement("DIV");
     select_dropdown_container.setAttribute("class", "select-items select-hide");
 
-
+    /*fill data from select element to select_dropdown_container */
     var options = selElmnt.querySelectorAll("option");
     options.forEach((child_selElemnt, index) => {
         var option = document.createElement("DIV");
