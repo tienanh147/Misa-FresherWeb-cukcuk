@@ -61,7 +61,7 @@
         <div class="header-content">
             <div class="page-title">Danh sách nhân viên</div>
             <div class="page-feature">
-                <div class="button button-icon">
+                <div class="button button-icon" onclick="document.querySelector('.modal').style.display='block'">
                     <div class="icon-default icon-add"></div>Thêm nhân viên
                 </div>
             </div>
@@ -662,9 +662,128 @@
         </div>
     </div>
 
+    <div class="modal">
 
+        <div class="form-wrapper animate">
+
+            <div class="form-wrapper-header">
+                THÔNG TIN NHÂN VIÊN
+            </div>
+
+            <form class="form-content" action="post">
+                <div class="form-ava">
+                    <label for="upload-image" class="upload-img"></label>
+                    <input id="upload-image" type="file">
+
+                    <span>(Vui lòng chọn ảnh có định dạng .jpg, .jpeg, .png, .gif.)</span>
+                </div>
+
+                <div class="form-input-info">
+                    <div class="header-inputs"> A. THÔNG TIN CHUNG
+                        <div class="color-line"></div>
+                    </div>
+                    <div class="input-wrapper">
+                        <label for="staff-ID">Mã nhân viên(*)</label>
+                        <input type="text" class="text-box-default input-item" id="staff-ID">
+                    </div>
+                    <div class="input-wrapper">
+                        <label for="name">Họ và tên(*)</label>
+                        <input type="text" class="text-box-default input-item" id="name">
+                    </div>
+                    <div class="input-wrapper">
+                        <label for="bOd">Ngày sinh</label>
+                        <input type="text" class="text-box-default input-item" id="bOd">
+                    </div>
+                    <div class="input-wrapper">
+                        <label for="gender">Giới tính</label>
+                        <input type="text" class="text-box-default input-item" id="gender">
+                    </div>
+                    <div class="input-wrapper">
+                        <label for="CMND">Số CMTND/ Căn cước(*)</label>
+                        <input type="text" class="text-box-default input-item" id="CMND">
+                    </div>
+                    <div class="input-wrapper">
+                        <label for="CMDN-date">Ngày cấp</label>
+                        <input type="text" class="text-box-default input-item" id="CMDN-date">
+                    </div>
+
+                    <div class="input-wrapper" style="flex-basis: 100%;">
+                        <label for="CMDN-place">Nơi cấp)</label>
+                        <input type="text" class="text-box-default input-item" id="CMDN-place">
+                    </div>
+                    <div class="input-wrapper">
+                        <label for="email">Email(*)</label>
+                        <input type="text" class="text-box-default input-item" id="email">
+                    </div>
+                    <div class="input-wrapper">
+                        <label for="phone">Số điện thoại(*)</label>
+                        <input type="text" class="text-box-default input-item" id="phone">
+                    </div>
+                    <div class="header-inputs"> B. THÔNG TIN CÔNG VIỆC
+                        <div class="color-line"></div>
+                    </div>
+                    <div class="input-wrapper">
+                        <label for="duty">Vị trí</label>
+                        <div class="select-box input-item" id="duty">
+                            <select>
+                                <option value="0">Giám đốc</option>
+                                <option value="1">Trưởng phòng</option>
+                                <option value="2">Nhân viên</option>
+                                <option value="3">Lao công</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="input-wrapper">
+                        <label for="department">Phòng ban</label>
+                        <div class="select-box input-item" id="department">
+                            <select>
+                                <option value="0">Phòng nhân sự</option>
+                                <option value="1">Phòng công nghệ</option>
+                                <option value="2">Phòng marketing</option>
+                                <option value="3">Phòng bếp</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="input-wrapper">
+                        <label for="tax-ID">Mã số thuế cá nhân</label>
+                        <input type="text" class="text-box-default input-item" id="tax-ID">
+                    </div>
+                    <div class="input-wrapper">
+                        <label for="salary">Mức lương cơ bản</label>
+                        <input type="text" class="text-box-default input-item" id="salary">
+                    </div>
+                    <div class="input-wrapper">
+                        <label for="office-date">Ngày gia nhập</label>
+                        <input type="text" class="text-box-default input-item" id="office-data">
+                    </div>
+                    <div class="input-wrapper">
+                        <label for="working-status">Tình trạng công việc</label>
+                        <div class="select-box input-item" id="working-status">
+                            <select>
+                                <option value="0">Đang làm việc</option>
+                                <option value="1">Xin tạm nghỉ</option>
+                                <option value="2">Đã nghỉ việc</option>
+                                <option value="3">Bị đuổi việc</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <button type="submit" class="button button-icon">
+                        <i class="fas fa-save"></i>
+                        Lưu
+                    </button>
+
+
+                </div>
+            </form>
+
+            <div class="form-footer"></div>
+        </div>
+
+    </div>
 
 </body>
 <script src="../component/select-custom/select-custom.js "></script>
+<script src="../component/modal-form-custom/modal-form-custom.js"></script>
 
 </html>

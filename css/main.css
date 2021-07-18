@@ -5,6 +5,7 @@
 @import url('../css/layout/menu.css');
 @import url('../css/layout/content.css');
 @import url('../css/base/variable.css');
+@import url('../component/modal-form-custom/modal-form-custom.css');
 @font-face {
     font-family: 'GoogleSans-Medium';
     src: url(../Resource/font/GoogleSans-Medium.otf);
