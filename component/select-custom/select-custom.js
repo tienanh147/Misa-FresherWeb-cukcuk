@@ -23,6 +23,10 @@ select_boxes.forEach(select_box => {
             option.setAttribute("style", "border:none;");
         }
         option.innerHTML = child_selElemnt.innerHTML;
+        var icon = document.createElement("I");
+        icon.setAttribute("class", class_icon);
+        option.insertBefore(icon, option.childNodes[0]);
+
         select_dropdown_container.appendChild(option);
 
         /*you can put this code anywhere in this js file to refactor code but slower
@@ -35,46 +39,47 @@ select_boxes.forEach(select_box => {
             selElmnt = this.parentNode.parentNode.querySelector("select");
             select_selected = this.parentNode.previousSibling; //get select-selected
             select_length = selElmnt.length;
-            var options = selElmnt.querySelectorAll("option");
-            Array.from(options).every((opt, i) => {
-                if (opt.innerHTML == this.innerHTML) {
+            console.log(this.textContent);
+
+            for (var i = 0; i < select_length; i++) {
+
+                if (selElmnt.options[i].innerHTML == this.textContent) {
                     selElmnt.selectedIndex = i;
-                    select_selected.innerHTML = this.innerHTML;
+                    select_selected.innerHTML = this.textContent;
                     same_as_selected = this.parentNode.querySelectorAll(".same-as-selected");
+
                     same_as_selected.forEach(item_same => {
-                        item_same.removeChild(item_same.querySelector("i")); // remove checked icon
+                        item_same.querySelector("i").style.visibility = "hidden"; /// remove checked icon
                         item_same.removeAttribute("class"); //remove class show checked row
                     });
+                    console.log(this);
                     this.setAttribute("class", "same-as-selected");
-
                     //add check icon
-                    var icon = document.createElement("I");
-                    icon.setAttribute("class", class_icon);
-                    this.insertBefore(icon, this.childNodes[0]);
-                    return false;
+                    this.querySelector("i").style.visibility = "visible";
+                    break;
                 }
-                return true;
 
-            });
-
-            // for (var i = 0; i < select_length; i++) {
-            //     if (selElmnt.options[i].innerHTML == this.innerHTML) {
+            }
+            // Array.from(options).every((opt, i) => {
+            //     if (opt.innerHTML == this.innerHTML) {
             //         selElmnt.selectedIndex = i;
             //         select_selected.innerHTML = this.innerHTML;
             //         same_as_selected = this.parentNode.querySelectorAll(".same-as-selected");
             //         same_as_selected.forEach(item_same => {
-            //             item_same.removeChild(item_same.querySelector("i")); // remove checked icon
+            //             item_same.querySelector("i").style.visibility = "hidden"; // remove checked icon
             //             item_same.removeAttribute("class"); //remove class show checked row
             //         });
+
             //         this.setAttribute("class", "same-as-selected");
             //         //add check icon
-            //         var icon = document.createElement("I");
-            //         icon.setAttribute("class", class_icon);
-            //         this.insertBefore(icon, this.childNodes[0]);
-            //         break;
+            //         this.querySelector("i").style.visibility = "visible";
+            //         return false;
             //     }
-            //     console.log(option);
-            // }
+            //     return true;
+
+            // });
+
+
 
             select_selected.click();
         });

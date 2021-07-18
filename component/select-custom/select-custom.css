@@ -1,4 +1,11 @@
 @import url('../../css/base/custom-scroll.css');
+.select-box {
+    position: relative;
+    font-size: 12px;
+    white-space: nowrap;
+    height: 40px;
+}
+
 .select-box select {
     display: none;
     /*hide original SELECT element:*/
@@ -8,7 +15,7 @@
 /*style the items-container (options), including the selected item:*/
 
 .select-selected {
-    height: 40px;
+    height: 100%;
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -33,7 +40,7 @@
 .select-selected:after {
     content: "";
     width: 40px;
-    height: 40px;
+    height: 100%;
     background-image: url('../../Resource/icon/chevron-down-solid.svg');
     background-size: 12px 12px;
     background-repeat: no-repeat;
@@ -44,7 +51,8 @@
 /*point the arrow upwards when the select box is open (active):*/
 
 .select-selected.select-arrow-active:after {
-    background-image: url('../../Resource/icon/chevron-up-solid.svg');
+    /* background-image: url('../../Resource/icon/chevron-up-solid.svg'); */
+    transform: rotate(180deg);
 }
 
 .select-selected.select-arrow-active {
@@ -62,12 +70,16 @@
 }
 
 
-/* custom selected item */
+/*style items (options):*/
 
-.same-as-selected {
-    color: #ffffff;
-    position: relative;
-    background-color: #019160;
+.select-items {
+    position: absolute;
+    top: 102%;
+    left: 0;
+    right: 0;
+    height: 300%;
+    overflow-y: scroll;
+    z-index: 99;
 }
 
 
@@ -75,10 +87,26 @@
 
 .select-items div {
     /* color: #000000; */
-    padding: 10px 16px 10px 30px;
+    height: 33%;
     border-top: 1px solid #bbbbbb;
     cursor: pointer;
     user-select: none;
+    display: flex;
+    align-items: center;
+}
+
+.select-items div i {
+    visibility: hidden;
+    margin: auto 10px;
+}
+
+
+/* custom selected item */
+
+.same-as-selected {
+    color: #ffffff;
+    position: relative;
+    background-color: #019160;
 }
 
 
@@ -90,29 +118,8 @@
 }
 
 
-/*style items (options):*/
-
-.select-items {
-    position: absolute;
-    top: calc(100% + 1px);
-    left: 0;
-    right: 0;
-    height: 120px;
-    overflow-y: scroll;
-    z-index: 99;
-}
-
-
 /*hide the items when the select box is closed:*/
 
 .select-hide {
     display: none;
-}
-
-.same-as-selected i {
-    position: absolute;
-    left: 10px;
-    /* center vertical */
-    top: 50%;
-    transform: translate(0, -50%);
 }
