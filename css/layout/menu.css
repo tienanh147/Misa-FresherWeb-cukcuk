@@ -23,7 +23,7 @@
 
 .menu .menu-item-active {
     background-color: #019160;
-    color: #ffffff;
+    color: #ffffff !important;
 }
 
 .menu .menu-item:visited {
