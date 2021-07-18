@@ -26,10 +26,8 @@
 
 .filter .filter-bar .select-box {
     flex: 2;
-    position: relative;
-    font-size: 12px;
+    min-width: 200px;
     margin: 0px 10px 0px 10px;
-    white-space: nowrap;
 }
 
 .filter .refresh-btn {
@@ -40,4 +38,8 @@
     background-repeat: no-repeat;
     background-position: center;
     cursor: pointer;
+}
+
+.refresh-btn:hover {
+    background-color: #e5e5e5;
 }
