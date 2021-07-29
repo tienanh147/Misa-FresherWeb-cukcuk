@@ -1,0 +1,33 @@
+:root {
+    --checkbox-size: 20px;
+}
+
+.checkbox-custom {
+    color: #fff;
+    display: flex;
+    justify-content: center;
+    align-items: flex-end;
+    height: var(--checkbox-size);
+    width: var(--checkbox-size);
+    font-size: 16px;
+    border: 1px solid #BBBBBB;
+    border-radius: 4px;
+    box-sizing: border-box;
+    background-color: #fff;
+    cursor: pointer;
+}
+
+.checkbox-custom:hover {
+    /* border: none; */
+    border-color: #70f1c6;
+    background-color: #70f1c6;
+}
+
+.checked {
+    border-color: #01B075;
+    background-color: #01B075;
+}
+
+.checked:hover {
+    background-color: #01B075;
+}

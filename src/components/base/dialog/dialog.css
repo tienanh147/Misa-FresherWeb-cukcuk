@@ -1,0 +1,71 @@
+@import url('../../css/main.css');
+:root {
+    --dialog-height: 204px;
+    --dialog-width: 470px;
+    --dialog-header-height: 48px;
+    --dialog-footer-height: 60px;
+    --icon-warning-size: 40px;
+}
+
+.dialog {
+    position: absolute;
+    display: flex;
+    flex-direction: column;
+    width: var(--dialog-width);
+    height: var(--dialog-height);
+    left: calc(50% - var(--dialog-width) / 2);
+    top: calc(50% - var(--dialog-height) / 2);
+    border-radius: var(--border-radius);
+    box-sizing: border-box;
+    background-color: #fff;
+}
+
+.dialog .dialog-header {
+    font-family: GoogleSans-Bold;
+    font-size: 15px;
+    /* font-weight: bold; */
+    padding: 24px 24px 0 24px;
+    height: var(--dialog-header-height);
+    box-sizing: border-box;
+    /* background-color: khaki; */
+}
+
+.dialog .dialog-content {
+    width: 100%;
+    height: calc(100% - var(--dialog-header-height) - var(--dialog-footer-height));
+    /* background-color: lemonchiffon; */
+    padding: 24px;
+    box-sizing: border-box;
+    display: flex;
+}
+
+.dialog-content .icon-warning {
+    margin-right: 10px;
+    height: var(--icon-warning-size);
+    width: var(--icon-warning-size);
+    border-radius: 50%;
+    background-color: #F4F4F4;
+    background-image: url('../../Resource/icon/warning.png');
+}
+
+.dialog-content .dialog-content-text {
+    line-height: 1.6;
+    font-size: 13px;
+    height: 100%;
+    width: 100%;
+    flex: 1;
+    overflow: auto;
+}
+
+.dialog .dialog-footer {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    border-radius: 0 0 var(--border-radius) var(--border-radius);
+    height: var(--dialog-footer-height);
+    background-color: #F4F4F4;
+}
+
+.dialog-footer .button {
+    margin-right: 16px;
+}

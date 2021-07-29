@@ -1,0 +1,95 @@
+.header {
+    height: 48px;
+    width: 100%;
+    display: grid;
+    grid-template-columns: 226px calc(100vw - 226px);
+}
+
+.header .header-left {
+    width: 225px;
+    display: flex;
+    align-items: center;
+    border-right: 1px solid #E5E5E5;
+}
+
+.header .header-left .toggle {
+    height: 24px;
+    width: 24px;
+    margin: 12px 10px 12px 16px;
+    background-image: url('../../assets/img/toggle.png');
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+}
+
+.header .header-left .logo {
+    height: 24px;
+    width: 100%;
+    background-image: url('../../assets/img/cukcuk-logo.png');
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: 0 center;
+}
+
+.header .header-right {
+    width: calc(100vw - 226px);
+    display: flex;
+    align-items: center;
+    border-bottom: 1px solid var(--border-object-color);
+    justify-content: space-between;
+}
+
+.header .header-right .list-dropdown {
+    min-width: 300px;
+    display: flex;
+    padding-left: 32px;
+    align-items: center;
+}
+
+.header .header-right .list-dropdown .dropdown-text {
+    font-family: GoogleSans-Bold;
+    font-size: 15px;
+    padding-right: 10px;
+    white-space: nowrap;
+}
+
+.header .header-right .list-dropdown .dropdown-arrow {
+    color: black;
+    font-size: 14px;
+    margin-right: 20px;
+    cursor: pointer;
+}
+
+.header .header-right .account {
+    display: grid;
+    align-items: center;
+    justify-content: flex-end;
+    grid-template-columns: auto auto auto;
+    /* height: 48px; */
+}
+
+.header .header-right .account .avatar {
+    height: 30px;
+    width: 30px;
+    background-image: url('../../assets/icon/avatar-default.png');
+    background-repeat: no-repeat;
+    background-size: contain;
+}
+
+.header .header-right .account .name {
+    margin: 0 16px 0 16px;
+    font-family: GoogleSans-Regular;
+    font-size: 13px;
+    white-space: nowrap;
+}
+
+.header .header-right .account .more {
+    margin-right: 16px;
+    height: 16px;
+    width: 16px;
+    background-image: url('../../assets/icon/option.png');
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+    cursor: pointer;
+}

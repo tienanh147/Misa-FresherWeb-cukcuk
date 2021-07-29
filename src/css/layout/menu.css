@@ -1,0 +1,71 @@
+.menu {
+    width: 225px;
+    height: calc(100vh - 48px);
+    border-right: 1px solid #E5E5E5E5;
+}
+
+.menu .menu-item {
+    font-size: 13px;
+    font-family: GoogleSans-Regular;
+    color: #515252 !important;
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    height: 44px;
+    width: 100%;
+    background-color: #ffffff;
+    padding-left: 16px;
+    box-sizing: border-box;
+    cursor: pointer;
+}
+
+.menu .menu-item:hover {
+    background-color: #e5e5e5e5;
+    color: #000 !important;
+}
+
+.menu .menu-item:hover>.menu-icon {
+    filter: brightness(0);
+}
+
+.menu .menu-item-active {
+    font-family: GoogleSans-Medium;
+    background-color: #019160;
+    color: #ffffff !important;
+}
+
+.menu .menu-item-active>.menu-icon {
+    filter: brightness(3);
+}
+
+.menu .menu-item-active:hover>.menu-icon {
+    filter: brightness(0);
+}
+
+.menu .menu-item:visited {
+    color: transparent;
+}
+
+.menu .menu-item .menu-icon {
+    width: 20px;
+    height: 20px;
+    /* background-color: #ffffff; */
+    margin-right: 10px;
+    background-size: contain;
+}
+
+.menu-icon.icon-dashboard {
+    background-image: url('../../assets/icon/dashboard.png');
+}
+
+.menu-icon.icon-report {
+    background-image: url('../../assets/icon/report.png');
+}
+
+.menu-icon.icon-setting {
+    background-image: url('../../assets/icon/setting.png');
+}
+
+.menu-icon.icon-employee {
+    background-image: url('../../assets/icon/dic-employee.png');
+}

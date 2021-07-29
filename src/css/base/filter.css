@@ -1,0 +1,45 @@
+@import url('./select-custom.css');
+.filter .filter-bar {
+    flex: 0.7;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+}
+
+.filter .filter-bar input {
+    flex: 3;
+    font-size: 13px;
+    /* width: 300px; */
+    padding-right: 16px;
+    padding-left: 40px;
+    outline: none;
+    box-sizing: border-box;
+}
+
+.filter-bar input::placeholder {
+    font-size: 12px;
+}
+
+.filter-bar input:focus {
+    border: 1px solid #019160;
+}
+
+.filter .filter-bar .select-box {
+    flex: 2;
+    min-width: 200px;
+    margin: 0px 10px 0px 10px;
+}
+
+.filter .refresh-btn {
+    width: 40px;
+    min-width: 40px;
+    background-color: var(--object-color);
+    background-image: url('../../assets/icon/refresh.png');
+    background-repeat: no-repeat;
+    background-position: center;
+    cursor: pointer;
+}
+
+.refresh-btn:hover {
+    background-color: #e5e5e5;
+}

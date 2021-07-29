@@ -1,0 +1,141 @@
+@import url('./form-ava.css');
+@import url('./form-input-info.css');
+
+/* @import url('../select-custom/select-custom.css');
+@import url('../../css/base/text-box.css');
+@import url('../../css/base/variable.css');
+@import url('../../css/base/font-face.css');
+@import url('../../css/base/button.css');
+:root {
+    --padding-right-left: 16px;
+    --form-width-ava: 120px;
+    --form-header-height: 55px;
+    --form-footer-height: 50px;
+    --border-radius: 4px;
+}
+
+body {
+    font-family: GoogleSans-Regular;
+} */
+
+.modal {
+    display: none;
+    /* Hidden by default */
+    position: fixed;
+    /* Stay in place */
+    z-index: 100;
+    /* Sit on top */
+    left: 0;
+    top: 0;
+    width: 100vw;
+    /* Full width */
+    height: 100vh;
+    /* Full height */
+    /* overflow: auto; */
+    /* Enable scroll if needed */
+    background-color: rgba(0, 0, 0, 0.4);
+    /* Black w/ opacity */
+    /* padding-top: 60px; */
+}
+
+.form-wrapper {
+    position: absolute;
+    width: 625px;
+    height: 95%;
+    top: 2.5%;
+    bottom: 2.5%;
+    left: calc(50% - 312.5px);
+    background-color: var(--object-color);
+    /* border: 1px solid #888; */
+    border-radius: var(--border-radius);
+    /* Could be more or less, depending on screen size */
+    /* padding: 0 16px; */
+    box-sizing: border-box;
+}
+
+
+/* header */
+
+.form-wrapper .form-wrapper-header {
+    width: 100%;
+    height: var(--form-header-height);
+    font-size: 20px;
+    text-transform: uppercase;
+    font-weight: bold;
+    padding-left: var(--padding-right-left);
+    box-sizing: border-box;
+    display: flex;
+    align-items: center;
+}
+
+.form-wrapper-header .x-btn {
+    position: absolute;
+    top: 0px;
+    right: 0px;
+    height: 25px;
+    width: 25px;
+    border-radius: 0px var(--border-radius) 0px var(--border-radius);
+    background-size: 16px 16px;
+    background-color: inherit;
+}
+
+.form-wrapper-header .x-btn:hover {
+    background-color: #E5E5E5;
+}
+
+
+/* content */
+
+.form-wrapper .form-content {
+    width: 100%;
+    height: calc(100% - var(--form-header-height) - var(--form-footer-height));
+    box-sizing: border-box;
+    /* background-color: yellow; */
+    display: flex;
+}
+
+.form-wrapper .form-content .form-ava {
+    margin-left: var(--padding-right-left);
+    height: 100%;
+    width: var(--form-width-ava);
+}
+
+.form-wrapper .form-content .form-input-info {
+    flex: 1;
+}
+
+.form-wrapper .form-footer {
+    height: var(--form-footer-height);
+    background-color: #F4F4F4;
+    width: 100%;
+    bottom: 0;
+    border-radius: 0 0 var(--border-radius) var(--border-radius);
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    box-sizing: border-box;
+    z-index: 1;
+}
+
+.animate {
+    -webkit-animation: animatezoom 0.4s;
+    animation: animatezoom 0.4s
+}
+
+@-webkit-keyframes animatezoom {
+    from {
+        -webkit-transform: scale(0.7)
+    }
+    to {
+        -webkit-transform: scale(1)
+    }
+}
+
+@keyframes animatezoom {
+    from {
+        transform: scale(0.7)
+    }
+    to {
+        transform: scale(1)
+    }
+}

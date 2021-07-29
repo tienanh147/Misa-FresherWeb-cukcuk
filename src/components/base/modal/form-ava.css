@@ -1,0 +1,23 @@
+.form-content .form-ava .upload-img {
+    margin-top: 10px;
+    display: block;
+    width: 100%;
+    height: var(--form-width-ava);
+    background-image: url('../../Resource/img/default-avatar.jpg');
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+    border: 1px solid var(--border-item-color);
+    border-radius: 50%;
+    cursor: pointer;
+}
+
+.form-content .form-ava input {
+    display: none;
+}
+
+.form-content .form-ava .text {
+    font: GoogleSans-Regular;
+    font-size: 11px;
+    text-align: center;
+}

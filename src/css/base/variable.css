@@ -1,0 +1,27 @@
+:root {
+    --bg-color2: #ffffff;
+    --bg-color: #E9EBEE;
+    --object-color: #ffffff;
+    --border-item-color: #bbbbbb;
+    --border-object-color: #E5E5E5;
+    --padding-right-left: 16px;
+    --form-width-ava: 120px;
+    --form-header-height: 55px;
+    --form-footer-height: 50px;
+    --border-radius: 4px;
+}
+
+@font-face {
+    font-family: 'GoogleSans-Medium';
+    src: url(../../assets/font/GoogleSans-Medium.otf);
+}
+
+@font-face {
+    font-family: 'GoogleSans-Regular';
+    src: url(../../assets/font/GoogleSans-Regular.otf);
+}
+
+@font-face {
+    font-family: 'GoogleSans-Bold';
+    src: url(../../assets/font/GoogleSans-Bold.otf);
+}
