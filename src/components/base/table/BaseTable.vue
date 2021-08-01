@@ -50,11 +50,11 @@ export default {
   props: {
     apiURL: {
       type: String,
-      default: " ",
+      default: " "
     },
     fieldName: {
       type: Array,
-      default: function () {
+      default: function() {
         return [
           "index",
           "Code",
@@ -66,32 +66,32 @@ export default {
           "PositionName",
           "DepartmentName",
           "Salary",
-          "WorkStatus",
+          "WorkStatus"
         ];
-      },
-    },
+      }
+    }
   },
   mounted() {
     var me = this;
     axios
       .get("http://cukcuk.manhnv.net/v1/Employees")
-      .then((res) => {
+      .then(res => {
         console.log(res);
         me.data = res.data;
       })
-      .catch((res) => {
+      .catch(res => {
         console.log(res);
       });
   },
   methods: {
     rowOnDblClick(employeeId) {
       alert(employeeId);
-    },
+    }
   },
   data() {
     return {
-      data: [],
+      data: []
     };
-  },
+  }
 };
 </script>

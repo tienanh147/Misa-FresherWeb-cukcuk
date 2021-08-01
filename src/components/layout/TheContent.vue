@@ -32,7 +32,7 @@
         <thead class="table-header">
           <tr>
             <th fieldName="checkbox">
-              <custom-checkbox></custom-checkbox>
+              <input type="checkbox" name="" id="" />
             </th>
             <th fieldName="index">#</th>
             <th fieldName="EmployeeCode">Mã nhân viên</th>
@@ -59,13 +59,13 @@
             <td>{{ index }}</td>
             <td>{{ employee.EmployeeCode }}</td>
             <td>{{ employee.FullName }}</td>
-            <td>{{ employee.GenderName }}</td>
-            <td>{{ employee.DateOfBirth }}</td>
+            <td>{{ employee.GenderName | genderFormat }}</td>
+            <td>{{ employee.DateOfBirth | dateFormat }}</td>
             <td>{{ employee.PhoneNumber }}</td>
             <td>{{ employee.Email }}</td>
             <td>{{ employee.PositionName }}</td>
             <td>{{ employee.DepartmentName }}</td>
-            <td>{{ employee.Salary }}</td>
+            <td>{{ employee.Salary | salaryFormat }}</td>
             <td>{{ employee.WorkStatus }}</td>
           </tr>
         </tbody>
@@ -110,48 +110,32 @@
 import axios from "axios";
 import SelectBox from "../../components/base/select-custom/BaseSelectBox.vue";
 export default {
-  name: "Content",
+  name: "EmployeeContent",
   components: { SelectBox },
   mounted() {
     var me = this;
     axios
       .get("http://cukcuk.manhnv.net/v1/Employees")
-      .then((res) => {
+      .then(res => {
         console.log(res);
         me.employees = res.data;
       })
-      .catch((res) => {
+      .catch(res => {
         console.log(res);
       });
   },
+
   methods: {
     rowOnDblClick(employeeId) {
       alert(employeeId);
-    },
+    }
   },
+
   data() {
     return {
-      employees: [],
+      employees: []
     };
-  },
-  filter: {
-    genderFormat: function (gender) {
-      if (
-        gender == "Nam" ||
-        gender == "Nữ" ||
-        gender == "nam" ||
-        gender == "nữ"
-      ) {
-        return gender;
-      } else if (gender == "Không xác định") {
-        return "Khác";
-      } else {
-        return " ";
-      }
-    },
-    
-    
-  },
+  }
 };
 </script>
 

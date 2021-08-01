@@ -1,10 +1,9 @@
-@import url('../css/base/button.css');
-@import url('../css/base/text-box.css');
-@import url('../css/base/icon.css');
-@import url('../css/layout/header.css');
-@import url('../css/layout/menu.css');
-@import url('../css/layout/content.css');
-@import url('../css/base/variable.css');
+/* @import url(../css/common/custom-scroll.css); */
+
+@import url(../css/common/text-box.css);
+@import url(../css/common/icon.css);
+@import url(../css/common/button.css);
+@import url(../css/common/variable.css);
 
 /* @import url('../component/modal-form-custom/modal-form-custom.css');
 @import url('../component/checkbox-custom/checkbox.css'); */

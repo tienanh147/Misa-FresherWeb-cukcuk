@@ -1,6 +1,4 @@
-@import url('../base/filter.css');
-@import url('../base/table-custom.css');
-@import url('../base/paging.css');
+
 .content {
     min-width: 500px;
     position: absolute;

@@ -10,6 +10,7 @@
 }
 
 .paging .paging-left {
+    width: 200px;
     margin-left: 10px;
     font-size: 13px;
     white-space: nowrap;
@@ -115,13 +116,14 @@
 }
 
 .paging-bar .number-container {
-    flex: 0.25;
+    /* flex: 0.3; */
     display: flex;
     flex-direction: row;
-    justify-content: space-between;
+    justify-content: center;
 }
 
 .paging-bar .btn-page-number {
+    margin: 5px;
     font-size: 13px;
     border: 1px solid var(--border-item-color);
     border-radius: 100%;

@@ -3,7 +3,7 @@
     display: block;
     width: 100%;
     height: var(--form-width-ava);
-    background-image: url('../../Resource/img/default-avatar.jpg');
+    background-image: url('../../../assets/img/default-avatar.jpg');
     background-size: cover;
     background-repeat: no-repeat;
     background-position: center;

@@ -1,19 +1,34 @@
 <template>
   <div class="select-box" name="Position">
-    <div class="icon-default icon-x" @click="iconXClick"></div>
+    <div
+      class="icon-default icon-x"
+      @click="iconXClick"
+      v-show="selectedId != null"
+    ></div>
+
     <div
       class="select-selected"
       :class="{ 'select-arrow-active': dropdownShow }"
-      @click="dropdownShow = !dropdownShow"
+      @click="dropdownClick"
     >
-      Tất cả vị trí
+      {{ selectedName }}
     </div>
     <div class="select-items" v-show="dropdownShow">
-      <div positionid=" " style="border: none">
-        <i class="fal fa-check" @click="itemClick"></i>Tất cả vị trí
-      </div>
-      <div v-for="item in selectItem" :key="item.id" @click="itemClick">
-        <i class="fal fa-check"></i>{{ item.content }}
+      <div
+        v-for="item in dropdownData"
+        :key="item[idField]"
+        @click="itemClick(item[idField], item[nameField])"
+        :class="{ selected: item[idField] == selectedId }"
+      >
+        <i
+          class="fal fa-check"
+          :style="[
+            selectedId == getItemProp(item, 'Id')
+              ? { visibility: 'visible' }
+              : { visibility: 'hidden' },
+          ]"
+        ></i
+        >{{ item[nameField] }}
       </div>
     </div>
   </div>
@@ -23,46 +38,66 @@
 export default {
   name: "SelectBox",
   props: {
-    apiURL: {
-      type: String,
+    dropdownData: {
+      type: Array,
+      required: true
     },
-    extendObj: {
-      type: Object,
-      default: function () {
-        return {
-          Id: " ",
-          Code: null,
-          Name: "Chọn vị trí",
-          Description: "null",
-          ParentId: null,
-          CreatedDate: "1970-01-01T00:00:55",
-          CreatedBy: "Tien Anh",
-          ModifiedDate: null,
-          ModifiedBy: null,
-        };
-      },
+    initContent: {
+      type: String
     },
+    idField: {
+      type: String
+    },
+    nameField: {
+      type: String
+    }
   },
-  data() {
+
+  created() {},
+  mounted() {},
+  data: function() {
     return {
       dropdownShow: false,
-      selectItem: [
-        { checked: false, id: 1, content: "Giám đốc" },
-        { checked: false, id: 2, content: "Trưởng phòng" },
-        { checked: false, id: 3, content: "Nhân viên" },
-      ],
+      selectedId: null,
+      selectedName: this.initContent
     };
   },
+
   methods: {
-    iconXClick() {},
-    dropdownClick() {},
-    itemClick() {},
+    iconXClick() {
+      this.selectedName = this.initContent;
+      this.selectedId = null;
+    },
+    dropdownClick() {
+      this.dropdownShow = !this.dropdownShow;
+    },
+    itemClick(id, name) {
+      this.selectedName = name;
+      this.selectedId = id;
+      this.dropdownShow = false;
+      this.sendEmit();
+    },
+    getItemProp(object, subString) {
+      var propValue;
+      for (var prop in object) {
+        if (prop.includes(subString)) {
+          propValue = object[prop];
+          break;
+        }
+      }
+      return propValue;
+    },
+    sendEmit() {
+      return this.$emit("selectbox-select", this.selectedId);
+    }
   },
+  computed: {},
+  watch: {}
 };
 </script>
 
 <style scope>
-@import url("../../../css/base/custom-scroll.css");
+@import url("../../../css/common/custom-scroll.css");
 .select-box {
   position: relative;
   font-size: 12px;
@@ -105,9 +140,10 @@ export default {
 .select-box .icon-x {
   border-radius: 50%;
   position: absolute;
-  display: none;
+  /* display: none; */
   right: 35px;
-  /* top: calc(50% - var(--icon-x-size) / 2); */
+  height: 15px;
+  width: 15px;
   z-index: 1;
   cursor: pointer;
 }

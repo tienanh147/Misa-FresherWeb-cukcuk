@@ -1,4 +1,4 @@
-@import url('../../../css/base/custom-scroll.css');
+@import url('../../../css/common/custom-scroll.css');
 .select-box {
     position: relative;
     font-size: 12px;
@@ -62,7 +62,7 @@
     content: "";
     width: 40px;
     height: 100%;
-    background-image: url('../../Resource/icon/chevron-down.svg');
+    background-image: url('../../../assets/icon/chevron-down.svg');
     background-size: 18px 18px;
     background-repeat: no-repeat;
     background-position: center;
