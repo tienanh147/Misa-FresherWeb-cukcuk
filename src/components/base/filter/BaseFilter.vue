@@ -4,15 +4,20 @@
       <input
         class="text-box-default icon-search"
         type="text"
-        :placeholder="inputPlaceHolder"
+        v-bind="$attrs"
+        :value="filter.EmployeeFilter"
+        @input="inputDebounce"
       />
+      <!-- v-model="filter['EmployeeFilter']" -->
       <SelectBox
         v-for="(data, index) in selectBoxesData"
-        :dropdownData="data.slice(3)"
+        style="40px"
+        :selectBoxData="data"
         :key="index"
         :idField="data[1]"
         :nameField="data[2]"
         :initContent="data[0]"
+        v-model="filter[data[1]]"
       />
     </div>
     <div
@@ -142,24 +147,44 @@ export default {
       type: Object,
       default: function() {
         return {
-          employeeFilter: "n",
-          departmentId: "",
-          positionId: ""
+          EmployeeFilter: "n",
+          DepartmentId: "",
+          PositionId: ""
         };
       },
       required: true
-    },
+    }
   },
   data() {
-    return {};
+    return {
+      filter: this.filterObj,
+      debounce: null
+    };
   },
   methods: {
     btnRefreshClick: function() {
-      this.sendEmit();
+      this.$emit("refreshBtn", this.filter);
     },
 
     sendEmit() {
-      return this.$emit("filter-choose", this.filterObj);
+      return this.$emit("filter-choose", this.filter);
+    },
+
+    inputDebounce(event) {
+      var vm =this;
+      var timer = 600;
+      clearTimeout(this.debounce);
+      this.debounce = setTimeout(function() {
+        vm.filter.EmployeeFilter = event.target.value;
+      }, timer);
+    }
+  },
+  watch: {
+    filter: {
+      handler: function() {
+        this.sendEmit();
+      },
+      deep: true
     }
   }
 };
@@ -175,6 +200,8 @@ export default {
 
 .filter .filter-bar input {
   flex: 3;
+  /* max-width: 350px; */
+  min-width: 300px;
   font-size: 13px;
   /* width: 300px; */
   padding-right: 16px;
@@ -193,6 +220,7 @@ export default {
 
 .filter .filter-bar .select-box {
   flex: 2;
+  /* max-width: 250px; */
   min-width: 200px;
   margin: 0px 10px 0px 10px;
 }
