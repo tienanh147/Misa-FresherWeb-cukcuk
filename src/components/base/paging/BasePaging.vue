@@ -19,7 +19,7 @@
       <div class="number-container">
         <div
           class="btn-paging-base btn-page-number"
-          v-for="index in viewPages(4)"
+          v-for="index in viewPages"
           :key="index"
           :class="{ 'number-active': index == pageNumber }"
           @click="btnNumberClick(index)"
@@ -53,6 +53,9 @@
 export default {
   name: "Paging",
   props: {
+    /**
+     * Số bản ghi
+     */
     totalRecord: {
       type: Number,
       default: function() {
@@ -60,6 +63,10 @@ export default {
       },
       required: true
     },
+
+    /**
+     * loại bản ghi
+     */
     nameRecord: {
       type: String,
       default: function() {
@@ -67,6 +74,10 @@ export default {
       },
       required: true
     },
+
+    /**
+     * tổng số trang
+     */
     totalPage: {
       type: Number,
       default: function() {
@@ -74,6 +85,10 @@ export default {
       },
       required: true
     },
+
+    /**
+     * số bản ghi 1 trang
+     */
     pageSize: {
       type: Number,
       default: function() {
@@ -81,6 +96,10 @@ export default {
       },
       required: true
     },
+
+    /**
+     * trang hiện tại
+     */
     pageNumber: {
       type: Number,
       default: function() {
@@ -89,58 +108,107 @@ export default {
       required: true
     }
   },
+
   data() {
     return {
       currPage: this.pageNumber
     };
   },
+  mounted() {
+    // this.pageNumber = this.pageNumber;
+  },
   methods: {
     // var vm = this;
+    /**
+     * Set sự kiện click cho nút NextPage.
+     * CreatedBy: TTAnh(08/08/2021)
+     */
     btnNextPageClick() {
-      if (this.currPage == this.totalPage) return;
+      if (this.pageNumber == this.totalPage) return;
       this.currPage++;
       this.sendEmit();
     },
+
+    /**
+     * Set sự kiện click cho nút PrevPage.
+     * CreatedBy: TTAnh(08/08/2021)
+     */
     btnPrevPageClick() {
-      if (this.currPage == 1) return;
+      if (this.pageNumber == 1) return;
       this.currPage--;
       this.sendEmit();
     },
+
+    /**
+     * Set sự kiện click cho nút LastPage.
+     * CreatedBy: TTAnh(08/08/2021)
+     */
     btnLastPageClick() {
       this.currPage = this.totalPage;
       this.sendEmit();
     },
+
+    /**
+     * Set sự kiện click cho nút FirstPage.
+     * CreatedBy: TTAnh(08/08/2021)
+     */
     btnFirstPageClick() {
       this.currPage = 1;
       this.sendEmit();
     },
+
+    /**
+     * Set sự kiện click cho nút Number
+     * @param {Number} index
+     * CreatedBy: TTAnh(08/08/2021)
+     */
     btnNumberClick(index) {
       this.currPage = index;
       this.sendEmit();
     },
+
+    /**
+     * hàm emit ra ngoài để phân trang
+     */
     sendEmit() {
       return this.$emit("paging-select", this.pageSize, this.currPage);
     }
   },
+
   computed: {
+    /**
+     * tính toán các nút Number trang hiện thị
+     * @return {Array}
+     * CreatedBy: TTAnh(10/08/2021)
+     */
     viewPages() {
-      // var num = 4;
-      return num => {
-        var startNumber = this.currPage - ((this.currPage - 1) % 4);
-        var endNumber =
-          startNumber + num - 1 <= this.totalPage
-            ? startNumber + num - 1
-            : this.totalPage;
+      /**
+       * số nút Number
+       */
+      var num = 4;
+      var startNumber = this.pageNumber - ((this.pageNumber - 1) % 4);
+      var endNumber;
+
+      endNumber =
+        startNumber + num - 1 <= this.totalPage
+          ? startNumber + num - 1
+          : this.totalPage;
+      if (endNumber - startNumber + 1 >= 0)
         return Array(endNumber - startNumber + 1)
           .fill()
           .map((_, idx) => startNumber + idx);
-      };
+      else return null;
     },
+
+    /**
+     * Tính toán số thử tự của trang hiện tại
+     * CreatedBy: TTAnh(08/08/2021)
+     */
     viewRecordRange() {
-      var start = (this.currPage - 1) * this.pageSize + 1;
+      var start = (this.pageNumber - 1) * this.pageSize + 1;
       var end =
-        this.currPage * this.pageSize < this.totalRecord
-          ? this.currPage * this.pageSize
+        this.pageNumber * this.pageSize < this.totalRecord
+          ? this.pageNumber * this.pageSize
           : this.totalRecord;
       return start + "-" + end + "/" + this.totalRecord;
     }
