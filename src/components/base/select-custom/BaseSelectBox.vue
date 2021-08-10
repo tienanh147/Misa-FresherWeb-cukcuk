@@ -1,19 +1,18 @@
 <template>
-  <div class="select-box" name="Position">
+  <div class="select-box" v-bind="$attrs">
     <div
       class="icon-default icon-x"
       @click="iconXClick"
-      v-show="selectedId != null"
+      v-show='selectedId != null && selectedId!=""'
     ></div>
 
-    <div
-      class="select-selected"
-      :class="{ 'select-arrow-active': dropdownShow }"
-      @click="dropdownClick"
-    >
+    <div class="select-selected" @click="dropdownClick($event)">
       {{ selectedName }}
     </div>
-    <div class="select-items" v-show="dropdownShow">
+    <div
+      class="select-items select-hide"
+      :class="{ 'select-items-bottom': dropup }"
+    >
       <div
         v-for="item in dropdownData"
         :key="item[idField]"
@@ -23,7 +22,7 @@
         <i
           class="fal fa-check"
           :style="[
-            selectedId == getItemProp(item, 'Id')
+            selectedId == item[idField]
               ? { visibility: 'visible' }
               : { visibility: 'hidden' },
           ]"
@@ -37,46 +36,129 @@
 <script>
 export default {
   name: "SelectBox",
+  model: {
+    prop: "selectedId",
+    event: "selectbox-select"
+  },
   props: {
-    dropdownData: {
+    /**
+     * dữ liệu truyền vào. là mảng các option dưới dạng Object
+     * 3 phần tử đầu là initContent, idField, nameField
+     */
+    selectBoxData: {
       type: Array,
       required: true
     },
+
+    /**
+     * hiển thị nội dung khi không chọn
+     */
     initContent: {
-      type: String
+      type: String,
+      default() {
+        return "Chọn vị trí";
+      }
     },
+
+    /**
+     * trường id trong option của selectBoxData
+     */
     idField: {
-      type: String
+      type: String,
+      default() {
+        return "PositionId";
+      }
     },
+
+    /**
+     * trường nội dung trong option của selectBoxData
+     */
+    
     nameField: {
-      type: String
+      type: String,
+      default() {
+        return "PositionName";
+      }
+    },
+
+    /**
+     * đảo ngược chiều dropdown lên bên trên, cần dùng để không bị tràn trang
+     */
+    dropup: {
+      type: Boolean,
+      default() {
+        return false;
+      }
+    },
+
+    /**
+     * id đã được lựa chọn
+     */
+    selectedId: {
+      type: [String, Number],
+      default() {
+        return "";
+      }
     }
   },
 
   created() {},
-  mounted() {},
+  mounted() {
+    this.selectedName = this.computedSelectedName;
+  },
   data: function() {
     return {
+      /**
+       * hiển thị dropdown hay không
+       * --true: Hiển thị
+       * --false: Ẩn
+       */
       dropdownShow: false,
-      selectedId: null,
-      selectedName: this.initContent
+
+      /**
+       * nội dung của option đẫ chọn
+       */
+      selectedName: this.computedSelectedName
     };
   },
 
   methods: {
+    /**
+     * set sự kiện cho nút xóa lựa chọn.
+     * CreatedBy: TTAnh(08/08/2021)
+     */
     iconXClick() {
       this.selectedName = this.initContent;
-      this.selectedId = null;
+      this.sendEmit("");
     },
-    dropdownClick() {
+
+    /**
+     * @param {event} e
+     * set sự kiện ẩn hiện dropdown.
+     * CreatedBy: TTAnh(08/08/2021)
+     */
+    dropdownClick(e) {
       this.dropdownShow = !this.dropdownShow;
+      e.stopPropagation();
+      this.closeAllSelect(e.target);
+      // console.log(e.target);
+      e.target.nextSibling.classList.toggle("select-hide");
+      e.target.classList.toggle("select-arrow-active");
     },
+
+    /**
+     * hàm set sự kiện click vào 1 option
+     * @param {String} id id của option được click
+     * @param {String} name nội dung của option được click
+     * CreatedBy: TTAnh(08/08/2021)
+     */
     itemClick(id, name) {
+      // this.selectedId = id;
       this.selectedName = name;
-      this.selectedId = id;
       this.dropdownShow = false;
-      this.sendEmit();
+      this.sendEmit(id);
     },
+
     getItemProp(object, subString) {
       var propValue;
       for (var prop in object) {
@@ -87,11 +169,40 @@ export default {
       }
       return propValue;
     },
-    sendEmit() {
-      return this.$emit("selectbox-select", this.selectedId);
+
+    /**
+     * Hàm emit sự kiện
+     * @param {String} id id của option được chọn
+     */
+    sendEmit(id) {
+      return this.$emit("selectbox-select", id);
     }
   },
-  computed: {},
+  computed: {
+    /**
+     * do dữ liệu truyền vào bao gồm cả initContent, idField, nameField
+     * nên cần cắt đi 3 phần tử đầu của mảng.
+     * CreatedBy: TTAnh(08/08/2021)
+     */
+    dropdownData: function() {
+      return this.selectBoxData.slice(3);
+    },
+
+    /**
+     * tìm ra nội dung của option với id là selectedId.
+     * CreatedBy: TTAnh(08/08/2021)
+     */
+    computedSelectedName: function() {
+      var data = this.dropdownData;
+      var name = this.initContent;
+      data.forEach(item => {
+        if (this.selectedId == item[this.idField]) {
+          name = item[this.nameField];
+        }
+      });
+      return name;
+    }
+  },
   watch: {}
 };
 </script>
@@ -192,7 +303,7 @@ export default {
 .select-items {
   /* display: none; */
   position: absolute;
-  top: 102%;
+  top: calc(100% + 1px);
   left: 0;
   right: 0;
   height: 300%;
@@ -202,14 +313,14 @@ export default {
 
 .select-items-bottom {
   top: auto;
-  bottom: 102% !important;
+  bottom: calc(100% + 1px) !important;
 }
 
 /* custom list-item */
 
 .select-items div {
   /* color: #000000; */
-  height: 33%;
+  height: 32.5%;
   border-top: 1px solid #bbbbbb;
   cursor: pointer;
   user-select: none;
