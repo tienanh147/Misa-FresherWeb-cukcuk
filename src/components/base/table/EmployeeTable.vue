@@ -26,7 +26,7 @@
           @click="rowOnClick(employee)"
           @dblclick="rowOnDblClick(employee.EmployeeId)"
         >
-          <td @dblclick.stop=""><CheckBox :checked="employee.IsChecked" /></td>
+          <td @dblclick.stop><CheckBox :checked="employee.IsChecked" /></td>
           <td>{{ (pageNumber - 1) * pageSize + index + 1 }}</td>
           <td>{{ employee.EmployeeCode }}</td>
           <td>{{ employee.FullName }}</td>
@@ -37,7 +37,7 @@
           <td>{{ employee.PositionName }}</td>
           <td>{{ employee.DepartmentName }}</td>
           <td>{{ employee.Salary | salaryFormat }}</td>
-          <td>{{ employee.WorkStatus }}</td>
+          <td>{{ employee.WorkStatus | workStatusFormat }}</td>
         </tr>
       </tbody>
     </table>
@@ -45,16 +45,23 @@
 </template>
 
 <script>
-
 import CheckBox from "../checkbox-custom/BaseCheckBox.vue";
 export default {
   name: "EmployeeTable",
   components: { CheckBox },
   props: {
+
+    /**
+     * danh sách employees được truyền vào
+     */
     employees: {
       type: Array,
       required: true
     },
+
+    /**
+     * Dùng để đánh số thứ tự
+     */
     pageSize: {
       type: Number,
       default: function() {
@@ -62,6 +69,10 @@ export default {
       },
       required: true
     },
+
+    /**
+     * Dùng để đánh số thứ tự
+     */
     pageNumber: {
       type: Number,
       default: function() {
@@ -71,6 +82,10 @@ export default {
     }
   },
   methods: {
+    /**
+     * Hàm set sự kiên Click vào row
+     * CreatedBy: TTAnh(08/08/2021)
+     */
     rowOnClick(employee) {
       employee.IsChecked = !employee.IsChecked;
       var obj = {
@@ -89,9 +104,19 @@ export default {
       }
       this.$emit("changeSelectedList", this.selectedList);
     },
+
+    /**
+     * Hàm setx sự kiện dblClick vào rơ
+     * CreatedBy: TTAnh(08/08/2021)
+     */
     rowOnDblClick(employeeId) {
-      alert(employeeId);
+      this.$emit("showDetail", employeeId);
     },
+
+    /**
+     * Hàm lấy dữ liệu table dự phòng
+     * CreatedBy: TTAnh(08/08/2021)
+     */
     getTableData() {
       // var vm = this;
       this.axios
@@ -107,10 +132,19 @@ export default {
   },
   data() {
     return {
+      /**
+       * danh sách cac hàng được chọn
+       */
       selectedList: []
     };
   },
   watch: {
+    /**
+     * Hàm quan sát sự thay đổi của prop employees,
+     * khi danh sách employees thay đổi thì cần check xem có phần tử nào 
+     * trong mảng này đã được chọn trước đó hay không
+     * CreatedBy: TTAnh(08/08/2021)
+     */
     employees: function() {
       for (var checked of this.selectedList) {
         for (var e of this.employees) {
