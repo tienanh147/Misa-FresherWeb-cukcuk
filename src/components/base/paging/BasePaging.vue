@@ -114,9 +114,6 @@ export default {
       currPage: this.pageNumber
     };
   },
-  mounted() {
-    // this.pageNumber = this.pageNumber;
-  },
   methods: {
     // var vm = this;
     /**
