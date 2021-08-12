@@ -8,11 +8,11 @@
 @import url('../../../css/common/button.css'); */
 
 :root {
-    --padding-right-left: 16px;
+    /* --padding-right-left: 16px; */
     --form-width-ava: 120px;
     --form-header-height: 55px;
     --form-footer-height: 50px;
-    --border-radius: 4px;
+    /* --border-radius: 4px; */
 }
 
 body {

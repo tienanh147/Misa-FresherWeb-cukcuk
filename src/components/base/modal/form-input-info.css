@@ -26,7 +26,7 @@
 }
 
 .form-input-info .input-wrapper {
-    width: 49%;
+    flex-basis: 49%;
     outline: none;
     box-sizing: border-box;
     padding-bottom: 13px;
@@ -38,15 +38,18 @@
     display: block;
 }
 
+
+/* 
 .form-input-info .input-wrapper .input-item {
     width: 100%;
     font-size: 12px !important;
     max-width: 224px;
     height: 34px;
     outline: none;
-}
+} */
 
-.form-input-info .input-wrapper #Salary {
+
+/* .form-input-info .input-wrapper #Salary {
     padding-right: 45px;
     text-align: right;
 }
@@ -68,7 +71,7 @@
 
 .form-input-info .input-required {
     border: 1.7px solid red;
-}
+} */
 
 .modal .button {
     outline: none;
@@ -109,9 +112,6 @@ input::-webkit-inner-spin-button {
     -webkit-appearance: none;
     margin: 0;
 }
-
-
-/* Firefox */
 
 input[type=number] {
     -moz-appearance: textfield;
