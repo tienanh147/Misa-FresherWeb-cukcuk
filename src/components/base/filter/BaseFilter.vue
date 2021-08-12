@@ -10,7 +10,7 @@
       />
       <!-- v-model="filter['EmployeeFilter']" -->
       <SelectBox
-        v-for="(data, index) in selectBoxesData"
+        v-for="(data, index) in computedSelectBoxesData"
         style="40px"
         :selectBoxData="data"
         :key="index"
@@ -161,6 +161,12 @@ export default {
       debounce: null
     };
   },
+  computed: {
+    computedSelectBoxesData(){
+      if(this.selectBoxesData.length<2) return [];
+      else return this.selectBoxesData;
+    }
+  },
   methods: {
     btnRefreshClick: function() {
       this.$emit("refreshBtn", this.filter);
@@ -172,7 +178,7 @@ export default {
 
     inputDebounce(event) {
       var vm =this;
-      var timer = 600;
+      var timer = 1000;
       clearTimeout(this.debounce);
       this.debounce = setTimeout(function() {
         vm.filter.EmployeeFilter = event.target.value;
@@ -196,12 +202,14 @@ export default {
   display: flex;
   justify-content: flex-start;
   align-items: center;
+  flex-wrap: nowrap;
 }
 
 .filter .filter-bar input {
   flex: 3;
-  /* max-width: 350px; */
-  min-width: 300px;
+  /* flex-basis: 40%; */
+  max-width: calc(40%);
+  /* min-width: 300px; */
   font-size: 13px;
   /* width: 300px; */
   padding-right: 16px;
@@ -219,8 +227,9 @@ export default {
 }
 
 .filter .filter-bar .select-box {
-  flex: 2;
+  /* flex-basis: 25%; */
   /* max-width: 250px; */
+  flex: 2;
   min-width: 200px;
   margin: 0px 10px 0px 10px;
 }
