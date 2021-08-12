@@ -1,0 +1,9 @@
+/* @import url('../../css/main.css'); */
+
+:root {
+    --dialog-height: 204px;
+    --dialog-width: 470px;
+    --dialog-header-height: 48px;
+    --dialog-footer-height: 60px;
+    --icon-warning-size: 40px;
+}
