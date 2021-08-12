@@ -55,7 +55,7 @@ Vue.mixin({
             }
         },
         salaryFormat: function(salary) {
-            if (salary != null || salary != undefined) {
+            if (salary != null) {
                 var num = salary.toFixed(0).replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1,");
                 return num;
             }
