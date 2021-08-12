@@ -1,21 +1,19 @@
 <template>
   <div class="checkbox-custom" :class="{ checked: checked }">
-    <i class="far fa-check"></i>
+    <i class="far fa-check" @click="$emit('check',checked)"></i>
     <!-- @dblclick.stop="" -->
     <!-- <input
       type="checkbox"
       v-bind:checked="checked"
-      v-on:change="$emit('change', $event.target.checked)"
+      @change="$emit('change', $event.target.checked)"
     /> -->
   </div>
-
-  <!-- @click="checkBoxClick($event)" @dblclick="preventPopUp($event)" -->
 </template>
 
 <script>
 export default {
   name: "CheckBox",
-  // model: { prop: "checked", event: "change" },
+  model: { prop: "checked", event: "change" },
   props: {
     checked: {
       type: Boolean
