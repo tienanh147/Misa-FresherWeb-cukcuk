@@ -28,7 +28,7 @@
       placeholder="Tìm kiếm theo Mã, Tên hoặc Số điện thoại"
       :filterObj="filter"
       @filter-choose="filterTable"
-      @refreshBtn="refreshBtnClick"
+      @refreshBtn="refreshData"
       :selectBoxesData="selectBoxesFilter"
     />
 
@@ -58,6 +58,15 @@
       :selectBoxesData="selectBoxesForm"
       :formMode="modalForm.formMode"
       :formDataId="modalForm.employeeId"
+      @refreshData="refreshData"
+    />
+    <Dialog
+      v-if="dialog.isShow"
+      :header="dialog.header"
+      :content="dialog.content"
+      :type="dialog.type"
+      :confirmBtn="dialog.confirmBtn"
+      :cancelBtn="dialog.cancelBtn"
     />
 
     <div class="loading" v-if="loading">
@@ -72,9 +81,10 @@ import FilterTable from "../base/filter/BaseFilter.vue";
 import EmployeeTable from "../base/table/EmployeeTable.vue";
 import Paging from "../base/paging/BasePaging.vue";
 import ModalForm from "../base/modal/BaseModalForm.vue";
+import Dialog from "../base/dialog/BaseDialog.vue";
 export default {
   name: "EmployeeContent",
-  components: { FilterTable, EmployeeTable, Paging, ModalForm },
+  components: { FilterTable, EmployeeTable, Paging, ModalForm, Dialog },
   created() {
     this.getTableData(
       this.paging.pageSize,
@@ -86,8 +96,7 @@ export default {
   mounted() {},
 
   methods: {
-    /**
-     * Hàm lấy dữ liệu cho các Select Box và thêm các trường init content, idField, nameField vào đầu mảng.
+    /** Hàm lấy dữ liệu cho các Select Box và thêm các trường init content, idField, nameField vào đầu mảng.
      * --initContent: Nội dung hiển thị khi không chọn.
      * --idField: trường id của object.
      * --nameField: trường nội dung của object.
@@ -101,12 +110,11 @@ export default {
       await this.axios
         .get("http://cukcuk.manhnv.net/v1/Positions")
         .then(res => {
-          console.log(res.data);
           /**
            * dữ liệu lấy được
            */
           const arrayData = res.data;
-          
+
           //#region Thêm trường nameField và idField
           arrayData.unshift("PositionName");
           arrayData.unshift("PositionId");
@@ -125,7 +133,8 @@ export default {
 
           //khi hoàn thành thì tăng biến doneSelectBoxesData lên 1
           this.doneSelectBoxesData++;
-        }).catch(error=>{
+        })
+        .catch(error => {
           console.log(error);
         });
 
@@ -133,7 +142,6 @@ export default {
         .get("http://cukcuk.manhnv.net/api/Department")
         .then(res => {
           // console.log(res);
-          console.log(res.data);
           const arrayData = res.data;
           //#region Thêm trường nameField và idField
           arrayData.unshift("DepartmentName");
@@ -146,11 +154,12 @@ export default {
           //#endregion
 
           this.selectBoxesForm.push(arrayData2);
-          this.selectBoxesFilter.push(arrayData);
+          this.selectBoxesFilter.unshift(arrayData);
 
           //khi hoàn thành thì tăng biến doneSelectBoxesData lên 1
           this.doneSelectBoxesData++;
-        }).catch(error =>{
+        })
+        .catch(error => {
           console.log(error);
         });
       this.selectBoxesForm.push([
@@ -164,8 +173,7 @@ export default {
       ]);
     },
 
-    /**
-     * Hàm lấy dữ liệu của table table.
+    /** Hàm lấy dữ liệu của table table.
      * @param {Number} pageSize
      * @param {Number} pageNumber
      * @param {Object} filter
@@ -204,7 +212,7 @@ export default {
             //Lưu lại object filter
             vm.filter = filter;
           } else if (res.status == 204) {
-            vm.employees=[];
+            vm.employees = [];
           }
           this.loading = false;
         })
@@ -213,8 +221,8 @@ export default {
         });
     },
 
-    /**
-     * Hàm phân trang được emit từ paging.
+    /** Hàm phân trang được emit từ paging.
+     * 
      * @param {Number} pageSize
      * @param {Number} pageNumber
      * CreatedBy: TTAnh(05/08/2021)
@@ -223,8 +231,7 @@ export default {
       this.getTableData(pageSize, pageNumber, this.filter);
     },
 
-    /**
-     * Hàm lọc dữ liệu được emit từ filter.
+    /** Hàm lọc dữ liệu được emit từ filter.
      * @param {Object} filter
      * CreatedBy: TTAnh(05/08/2021)
      */
@@ -237,13 +244,23 @@ export default {
       }
     },
 
-    refreshBtnClick(filter) {
-      this.getSelectBoxesData();
-      this.getTableData(this.paging.pageSize, this.paging.pageNumber, filter);
+    /** Hàm refresh lại dữ liệu
+     * @param {Object} filter
+     */
+    refreshData(filter) {
+      if (filter) {
+        this.getSelectBoxesData();
+        this.getTableData(this.paging.pageSize, this.paging.pageNumber, filter);
+      } else {
+        this.getTableData(
+          this.paging.pageSize,
+          this.paging.pageNumber,
+          this.filter
+        );
+      }
     },
 
-    /**
-     * lưu danh sách các nhân viên cần xóa.
+    /** lưu danh sách các nhân viên cần xóa.
      * @param {Array} selectedList
      * CreatedBy: TTAnh(05/08/2021)
      */
@@ -251,12 +268,40 @@ export default {
       this.selectedList = selectedList;
     },
 
-    /**
-     * set sự kiện cho nút xóa.
-     * CreatedBy: TTAnh(05/08/2021)
+    /** set sự kiện cho nút xóa.
+     * CreatedBy: TTAnh(12/08/2021)
      */
-    btnDelClick: async function() {
-      // var vm = this;
+    btnDelClick() {
+      var vm = this;
+      var list = "";
+      for (var item of this.selectedList) {
+        list += item["code"] + ", ";
+      }
+      list = list.slice(0, -2);
+      var dialogSetting = {
+        type: "warning-red",
+        header: "Xóa các bản ghi",
+        content: `Bạn có muốn xóa các bản ghi sau không?: "<b>${list}</b>"`,
+        cancelBtn: {
+          content: "Hủy",
+          function: function() {
+            vm.dialog.isShow = false;
+          }
+        },
+        confirmBtn: {
+          content: "Xóa",
+          function: vm.deleteEmployees
+        },
+        isShow: true
+      };
+      this.dialog = dialogSetting;
+    },
+
+    /** Hàm xóa danh sách nhân viên
+     * CreatedBy: TTAnh(10/08/2021)
+     */
+    deleteEmployees: async function() {
+      this.dialog.isShow = false;
       this.loading = true;
       while (this.selectedList.length != 0) {
         var item = this.selectedList[0];
@@ -264,10 +309,8 @@ export default {
           .delete("http://cukcuk.manhnv.net/v1/Employees/" + item.id)
           .then(response => {
             if (response.status == 200) {
-              this.selectedList.pop();
               console.log(`delete ${item.code} sucessfully`);
             } else if (response.status == 204) {
-              this.selectedList.pop();
               console.log(`not found ${item.code}, maybe it is deleted`);
             } else if (response.status == 400) {
               console.log(`bad request for ${item.code}`);
@@ -277,6 +320,7 @@ export default {
               );
             }
           });
+        this.selectedList.shift();
       }
       await this.getTableData(
         this.paging.pageSize,
@@ -286,8 +330,7 @@ export default {
       this.loading = false;
     },
 
-    /**
-     * set sự kiện cho nút thêm mới.
+    /** set sự kiện cho nút thêm mới.
      * CreatedBy: TTAnh(05/08/2021)
      */
     btnAddClick() {
@@ -296,8 +339,7 @@ export default {
       this.modalForm.showModalForm = true;
     },
 
-    /**
-     * Hiển thị modal formMode
+    /** Hiển thị modal formMode
      * @param {String} employeeId
      * CreatedBy: TTAnh(05/08/2021)
      */
@@ -307,8 +349,7 @@ export default {
       this.modalForm.showModalForm = true;
     },
 
-    /**
-     * set cho sự kiện hideForm được emit từ modalform.
+    /** set cho sự kiện hideForm được emit từ modalform.
      * CreatedBy: TTAnh(05/08/2021)
      */
     hideForm() {
@@ -319,86 +360,95 @@ export default {
 
   data() {
     return {
-      /**
-       * các thông số của paging
+      /** các thông số của paging
        */
       paging: {
-        /**
-         * số bản ghi
+        /** số bản ghi
          */
         totalRecord: 1000,
-        /**
-         * số trang
+
+        /** số trang
          */
         totalPage: 50,
-        /**
-         * kích thước 1 trang
+
+        /** kích thước 1 trang
          */
         pageSize: 20,
-        /**
-         * trang hiện tại
+
+        /** trang hiện tại
          */
         pageNumber: 1
       },
-      /**
-       * danh sách nhân viên
+
+      /** danh sách nhân viên
        */
       employees: [],
 
-      /**
-       * hiển thị màn hình loading
+      /** hiển thị màn hình loading
        * true: Hiển thị. false: không hiển thị
        */
       loading: false,
-      /**
-       * filter Object
+
+      /** các thông số cho filter
        */
       filter: {
-        /**
-         * từ cần lọc của filter
+        /** từ cần lọc của filter
          */
         EmployeeFilter: "n",
-        /**
-         * id của phòng ban cần loc
+        /** id của phòng ban cần loc
          */
         DepartmentId: "",
-        /**
-         * id của vị trí cần lọc
+        /** id của vị trí cần lọc
          */
         PositionId: "" //vị trí cần tìm
       },
-      /**
-       *dữ liệu của selectbox trong filter
+
+      /** dữ liệu của selectbox trong filter
        */
       selectBoxesFilter: [],
-      /**
-       * dữ liệu của các selectbox trong form
+
+      /** dữ liệu của các selectbox trong form
        */
       selectBoxesForm: [],
-      /**
-       * đã lấy thành công mấy API selectbox, trường này nhằm mục đích xử lý bất đồng bộ
+
+      /** đã lấy thành công mấy API selectbox
+       * , trường này nhằm mục đích xử lý bất đồng bộ
        */
       doneSelectBoxesData: 0,
-      /**
-       * cac bản ghi đã được chọn, nhằm mục đích xóa nhiều
+
+      /** cac bản ghi đã được chọn, nhằm mục đích xóa nhiều
        */
       selectedList: [],
-      /**
-       * các thông số của modal form
-       */
+
+      /** các thông số của modal form
+      */
       modalForm: {
-        /**
-         * hiển thị Form hay không
+        /** hiển thị Form hay không
          */
         showModalForm: false,
 
-        /**
+        /** mode của form:
          * 0: Thêm mới.
          * 2: Sủa.
          */
         formMode: null,
+
+        /** Id của employee cần xem chi tiết */
         employeeId: null,
+
         doneData: false
+      },
+
+      /**
+       * các thông số của dialog popup
+       */
+      dialog: {
+        isShow: false,
+        header: "Xóa bản ghi",
+        content: "Bạn có chắc muốn xóa các nhân viên hay không?",
+        type: "warning-red",
+        confirmBtn: { content: "Xóa", function: null },
+        cancelBtn: { content: "Tiếp tục nhập", function: null }
       }
     };
   },
@@ -474,8 +524,6 @@ export default {
   height: 40px;
   background-color: var(--bg-color);
 }
-
-/* Grid */
 
 .content .table-custom {
   flex: 1;
