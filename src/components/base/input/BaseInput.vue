@@ -6,11 +6,11 @@
       {{ warning }}
     </div>
     <input
-      @input="inputEmit"
-      @blur="inputBlur($event)"
+      @blur="inputBlur($event)"   
       class="text-box-default input-item"
       v-bind="$attrs"
       :type="type"
+      @input="inputEmit"
       :value="formatInputValue"
     />
   </div>
@@ -27,7 +27,7 @@ export default {
    * nội tại component: việc binding inputValue vào value được ưu tiên hơn so với $attrs của input
    * bên ngoài component: v-model được ưu tiên hơn $attrs khi binding từ bên ngoài vào component
    */
-  model: { prop: "inputValue", event: "change" },
+  model: { prop: "inputValue", event: "input" },
   props: {
     label: {
       type: String
@@ -48,12 +48,15 @@ export default {
       }
     },
     type: {
-      type: String
+      type: String,
+      default() {
+        return "text";
+      }
     },
     timer: {
       type: Number,
       default() {
-        return 600;
+        return 800;
       }
     }
   },
@@ -64,8 +67,14 @@ export default {
     };
   },
   methods: {
+    /**
+     * Hàm set sự kiện blur
+     * @param {event} event
+     * CreatedBy: TTAnh(10/08/2021)
+     */
     inputBlur(event) {
       var elmt = event.target;
+      // this.$emit("change", elmt.value);
       if (this.required == true) {
         if (elmt.value == "") {
           elmt.classList.add("input-required");
@@ -76,19 +85,28 @@ export default {
           this.warning = null;
         }
       }
-      this.$emit("change", elmt.value);
     },
 
+    /**
+     * hàm set sự kiện input
+     * @param {event} event
+     * CreatedBy: TTAnh(10/08/2021)
+     */
     inputEmit(event) {
       var vm = this;
       var elmt = event.target;
+      vm.$emit("input", elmt.value);
+
       clearTimeout(this.debounce);
       this.warning = null;
       elmt.classList.remove("input-required");
-      vm.$emit("change", elmt.value);
+
       this.debounce = setTimeout(function() {
         var value = elmt.value;
-        if (vm.inputValidate(value)) {
+        if (value == "") {
+          elmt.classList.add("input-required");
+          vm.warning = "thông tin này là bắt buộc";
+        } else if (vm.inputValidate(value)) {
           vm.warning = null;
           elmt.classList.remove("input-required");
         } else {
@@ -97,14 +115,18 @@ export default {
         }
       }, this.timer);
     },
+
+    /**
+     * hàm validate dữ liệu
+     * CreatedBy: TTAnh(10/08/2021)
+     */
     inputValidate(value) {
       var re;
       if (this.validate == "email") {
         re = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
         return re.test(String(value).toLowerCase());
-      } else {
-        return value != null;
       }
+      return value != null;
     }
   },
   computed: {
@@ -114,7 +136,9 @@ export default {
       } else if (this.type == "date") {
         return this.inputValue.slice(0, 10);
       } else return this.inputValue;
-    }
+    },
+
+    
   },
   filter: {
     formatDetail: function(value) {
@@ -131,12 +155,10 @@ export default {
 <style scoped>
 .input-wrapper {
   position: relative;
-  width: 49%;
-  /* width: 300px; */
+  /* flex-basis: 49%; */
   outline: none;
   box-sizing: border-box;
   padding-bottom: 13px;
-  /* margin-right: 4px; */
 }
 
 .input-wrapper label {
@@ -162,22 +184,10 @@ export default {
 }
 .input-wrapper .input-item {
   width: 100%;
-  font-size: 12px !important;
+  font-size: 13px;
   max-width: 224px;
-  height: 34px;
+  height: 35px;
   outline: none;
-}
-
-.input-wrapper #Salary {
-  padding-right: 45px;
-  text-align: right;
-}
-
-.input-wrapper .money-unit {
-  position: absolute;
-  right: 10px;
-  bottom: 22px;
-  font-style: italic;
 }
 
 input::placeholder {
