@@ -211,7 +211,7 @@ export default {
 @import url("../../../css/common/custom-scroll.css");
 .select-box {
   position: relative;
-  font-size: 12px;
+  font-size: 13px;
   white-space: nowrap;
   height: 40px;
   width: 100%;
