@@ -3,7 +3,7 @@
     <table>
       <thead class="table-header">
         <tr>
-          <th fieldName="checkbox"><CheckBox /></th>
+          <th fieldName="checkbox"></th>
           <th fieldName="index">#</th>
           <th fieldName="EmployeeCode">Mã nhân viên</th>
           <th fieldName="FullName">Họ và tên</th>
@@ -21,7 +21,7 @@
         <tr
           v-for="(employee, index) in employees"
           :id="employee.EmployeeId"
-          :key="employee.EmployeeId"
+          :key="index"
           :class="{ checked: employee.IsChecked }"
           @click="rowOnClick(employee)"
           @dblclick="rowOnDblClick(employee.EmployeeId)"
@@ -49,18 +49,16 @@ import CheckBox from "../checkbox-custom/BaseCheckBox.vue";
 export default {
   name: "EmployeeTable",
   components: { CheckBox },
-  props: {
 
-    /**
-     * danh sách employees được truyền vào
+  props: {
+    /** danh sách employees được truyền vào
      */
     employees: {
       type: Array,
       required: true
     },
 
-    /**
-     * Dùng để đánh số thứ tự
+    /** Dùng để đánh số thứ tự
      */
     pageSize: {
       type: Number,
@@ -70,8 +68,7 @@ export default {
       required: true
     },
 
-    /**
-     * Dùng để đánh số thứ tự
+    /** Dùng để đánh số thứ tự
      */
     pageNumber: {
       type: Number,
@@ -81,9 +78,9 @@ export default {
       required: true
     }
   },
+
   methods: {
-    /**
-     * Hàm set sự kiên Click vào row
+    /** Hàm set sự kiên Click vào row
      * CreatedBy: TTAnh(08/08/2021)
      */
     rowOnClick(employee) {
@@ -102,19 +99,18 @@ export default {
           }
         });
       }
+      console.log(this.selectedList);
       this.$emit("changeSelectedList", this.selectedList);
     },
 
-    /**
-     * Hàm setx sự kiện dblClick vào rơ
+    /** Hàm set sự kiện dblClick vào row
      * CreatedBy: TTAnh(08/08/2021)
      */
     rowOnDblClick(employeeId) {
       this.$emit("showDetail", employeeId);
     },
 
-    /**
-     * Hàm lấy dữ liệu table dự phòng
+    /** Hàm lấy dữ liệu table dự phòng
      * CreatedBy: TTAnh(08/08/2021)
      */
     getTableData() {
@@ -130,24 +126,24 @@ export default {
         });
     }
   },
+
   data() {
     return {
-      /**
-       * danh sách cac hàng được chọn
+      /** danh sách cac hàng được chọn
        */
       selectedList: []
     };
   },
+
   watch: {
-    /**
-     * Hàm quan sát sự thay đổi của prop employees,
+    /** Hàm quan sát sự thay đổi của prop employees,
      * khi danh sách employees thay đổi thì cần check xem có phần tử nào 
      * trong mảng này đã được chọn trước đó hay không
      * CreatedBy: TTAnh(08/08/2021)
      */
-    employees: function() {
+    employees: function(list) {
       for (var checked of this.selectedList) {
-        for (var e of this.employees) {
+        for (var e of list) {
           if (checked.id == e.EmployeeId) {
             e.IsChecked = true;
             break;
