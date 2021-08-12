@@ -9,23 +9,30 @@ namespace MISA.CukCuk.Model
     {
         #region Property
         
-        public string EmployeeId { get; set; }
+        public Guid EmployeeId { get; set; }
         public string EmployeeCode { get; set; }
-        
-        public DateTime joinDate { get; set; }
-        public int martialStatus { get; set; }
-        public int educationalBackground { get; set; }
-        public string qualificationId { get; set; }
-        public string departmentId { get; set; }
-        public string positionId { get; set; }
-        public int workStatus { get; set; }
-        public string personalTaxCode { get; set; }
-        public int salary { get; set; }
-        public string positionCode { get; set; }
-        public string positionName { get; set; }
-        public string departmentCode { get; set; }
-        public string departmentName { get; set; }
-        public string qualificationName { get; set; }
+        public DateTime JoinDate { get; set; }
+        public int MartialStatus { get; set; }
+        public int EducationalBackground { get; set; }
+        public Guid QualificationId { get; set; }
+        public string QualificationName { get; set; }
+        public Guid DepartmentId { get; set; }
+        public Guid PositionId { get; set; }
+        public int WorkStatus { get; set; }
+        public string PersonalTaxCode { get; set; }
+        public double Salary { get; set; }
+        public string PositionCode { get; set; }
+        public string PositionName { get; set; }
+        public string DepartmentCode { get; set; }
+        public string DepartmentName { get; set; }
+        #endregion
+
+        #region Contructor
+        public Employee():base()
+        {
+            EmployeeId = Guid.NewGuid();
+
+        }
         #endregion
     }
 }

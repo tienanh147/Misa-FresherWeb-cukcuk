@@ -32,9 +32,9 @@ namespace MISA.CukCuk.Model
 
         public string PhoneNumber { get; set; }
 
-        public string? identityNumber { get; set; }
-        public DateTime? identityDate { get; set; }
-        public string? identityPlace { get; set; }
+        public string IdentityNumber { get; set; }
+        public DateTime? IdentityDate { get; set; }
+        public string? IdentityPlace { get; set; }
 
         #endregion
     }
