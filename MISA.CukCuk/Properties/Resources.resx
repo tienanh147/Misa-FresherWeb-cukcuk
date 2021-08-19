@@ -129,6 +129,9 @@
   <data name="MISAInsertMsg" xml:space="preserve">
     <value>Thêm mới thành công !</value>
   </data>
+  <data name="MISALackOfData" xml:space="preserve">
+    <value>Dữ liệu gửi lên bị thiếu những trường bắt buộc</value>
+  </data>
   <data name="MISANoContentMsg" xml:space="preserve">
     <value>Không có dữ liệu !</value>
   </data>

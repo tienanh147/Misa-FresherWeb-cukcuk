@@ -97,6 +97,15 @@ namespace MISA.CukCuk.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Dữ liệu gửi lên bị thiếu những trường bắt buộc.
+        /// </summary>
+        public static string MISALackOfData {
+            get {
+                return ResourceManager.GetString("MISALackOfData", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Không có dữ liệu !.
         /// </summary>
         public static string MISANoContentMsg {
