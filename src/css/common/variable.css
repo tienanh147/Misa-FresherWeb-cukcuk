@@ -6,6 +6,8 @@
     --border-object-color: #E5E5E5;
     --padding-right-left: 16px;
     --border-radius: 4px;
+    --menu-width: 226px;
+    --content-padding: 16px;
 }
 
 @font-face {
