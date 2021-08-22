@@ -1,6 +1,6 @@
 <template>
-  <div class="modal-dialog">
-    <div class="dialog">
+  <div class="modal-dialog" >
+    <div class="dialog animate" tabindex="0">
       <div class="dialog-header">{{ header }}</div>
 
       <div class="dialog-content">
@@ -8,10 +8,10 @@
         <div class="dialog-content-text" v-html="content"></div>
       </div>
       <div class="dialog-footer">
-        <button class="button btnCancel" @click="cancelBtn.function">
+        <button class="button btnCancel" @click="cancelBtn.function" tabindex="0" @keydown.right="focusConfirmBtn">
           {{ cancelBtn.content }}
         </button>
-        <button class="button" :class="btnClass" @click="confirmBtn.function">
+        <button class="button" :class="btnClass" @click="confirmBtn.function" tabindex="0" @keydown.left="focusCancelBtn" @keydown.tab="focusDialog">
           {{ confirmBtn.content }}
         </button>
       </div>
@@ -23,24 +23,31 @@ export default {
   model: { prop: "mode", event: "confirm" },
   name: "BaseDialog",
   props: {
+    /** loại dialog:
+     * -- warning-yellow
+     * -- warning-red
+     */
     type: {
       type: String,
       default() {
         return "warning-yellow";
       }
     },
+    /** Tiêu đề của dialog*/
     header: {
       type: String,
       default() {
         return "Đóng Form thông tin chung";
       }
     },
+    /** Nội dung của dialog */
     content: {
       type: String,
       default() {
         return 'Bạn có chắc muốn đóng form nhập "Thông tin chung của thủ tục 603" hay không?';
       }
     },
+    /** dữ liệu và sự kiện cho nút confirm của dialog */
     confirmBtn: {
       type: Object,
       default() {
@@ -53,6 +60,7 @@ export default {
         };
       }
     },
+    /** dữ liệu và sự kiện cho nút cancel của dialog*/
     cancelBtn: {
       type: Object,
       default() {
@@ -65,36 +73,59 @@ export default {
         };
       }
     },
-    mode: {
-      type: Number,
-      default() {
-        return 0;
-      }
-    }
+
+  },
+  mounted() {
+    this.focusDialog();
   },
   computed: {
+    /** icon tương ứng với type dialog */
     iconClass() {
       if (this.type == "warning-yellow") return { "warning-yellow": true };
       else if (this.type == "warning-red") return { "warning-red": true };
       else return { "warning-yellow": true };
     },
 
+    /** class style cho button confirm tương ứng với type dialog */
     btnClass() {
       if (this.type == "warning-yellow") return { btnGreen: true };
       else if (this.type == "warning-red") return { btnRed: true };
       else return { btnGreen: true };
     },
+    /** style cho button cancel dựa theo dữ liệu truyền vào
+     * phần này để mở rộng nếu cần
+     */
     cancelBtnStyle() {
       return {
         backgroundColor: this.cancelBtn.bgColor,
         color: this.cancelBtn.color
       };
     },
+    /** style cho button cancel dựa theo dữ liệu truyền vào
+     * . Phần này để mở rộng nếu cần
+     */
     confirmBtnStyle() {
       return {
         backgroundColor: this.confirmBtn.bgColor,
         color: this.confirmBtn.color
       };
+    }
+  },
+  methods: {
+    /** focus vào nút cancel */
+    focusCancelBtn() {
+      this.$el.querySelector('.btnCancel').focus();
+    },
+    /** focus vào nút confirm */
+    focusConfirmBtn() {
+      this.$el.querySelector('.btnCancel').nextElementSibling.focus();
+    },
+    /** 
+     * focus vào dialog để có hể tab được vào 2 nút 
+     * cancel và confirm mà không cần dùng chuột 
+     * */
+    focusDialog(){
+      this.$el.querySelector('.dialog').focus();
     }
   }
 };
@@ -114,6 +145,7 @@ export default {
 }
 
 .dialog {
+  outline: none;
   position: absolute;
   display: flex;
   flex-direction: column;
@@ -125,6 +157,8 @@ export default {
   box-sizing: border-box;
   background-color: #fff;
 }
+
+
 
 .dialog .dialog-header {
   font-family: GoogleSans-Bold;
@@ -183,6 +217,7 @@ export default {
 }
 
 .dialog-footer .button {
+  outline: none;
   border: none;
   width: 100px;
   display: flex;
@@ -192,6 +227,7 @@ export default {
   margin-right: 16px;
 }
 
+
 .dialog-footer .button.btnRed {
   background-color: #f65454;
 }
@@ -199,6 +235,11 @@ export default {
 .dialog-footer .button.btnRed:hover {
   background-color: #fd7b7b;
 }
+
+.dialog-footer .button.btnRed:focus {
+  background-color: #fd7b7b;
+}
+
 .dialog-footer .button.btnCancel {
   background-color: transparent;
   color: #000;
@@ -206,5 +247,31 @@ export default {
 
 .dialog-footer .btnCancel:hover {
   background-color: #e5e5e5;
+}
+.dialog-footer .btnCancel:focus {
+  background-color: #e5e5e5;
+}
+
+.animate {
+    -webkit-animation: animatezoom 0.4s;
+    animation: animatezoom 0.4s
+}
+
+@-webkit-keyframes animatezoom {
+    from {
+        -webkit-transform: scale(0.7)
+    }
+    to {
+        -webkit-transform: scale(1)
+    }
+}
+
+@keyframes animatezoom {
+    from {
+        transform: scale(0.7)
+    }
+    to {
+        transform: scale(1)
+    }
 }
 </style>
