@@ -3,20 +3,21 @@
     <table>
       <thead class="table-header">
         <tr>
-          <th fieldName="checkbox"></th>
-          <th fieldName="index">#</th>
-          <th fieldName="EmployeeCode">Mã nhân viên</th>
-          <th fieldName="FullName">Họ và tên</th>
-          <th fieldName="GenderName">Giới tính</th>
-          <th fieldName="DateOfBirth">Ngày sinh</th>
-          <th fieldName="PhoneNumber">Điện thoại</th>
-          <th fieldName="Email">Email</th>
-          <th fieldName="PositionName">Chức vụ</th>
-          <th fieldName="DepartmentName">Phòng ban</th>
-          <th fieldName="Salary" class="text-align-right">Mức lương cơ bản</th>
-          <th fieldName="WorkStatus">Tình trạng công việc</th>
+          <th fieldName="checkbox" style="width: 4em"></th>
+          <th fieldName="index" style="width: 3.1em">#</th>
+          <th fieldName="EmployeeCode" style="width: 7.5em">Mã nhân viên</th>
+          <th fieldName="FullName" style="width:12em">Họ và tên</th>
+          <th fieldName="GenderName" style="width:5.5em">Giới tính</th>
+          <th fieldName="DateOfBirth" style="width:7em">Ngày sinh</th>
+          <th fieldName="PhoneNumber" style="width:8em">Điện thoại</th>
+          <th fieldName="Email" style="width:18em">Email</th>
+          <th fieldName="PositionName" style="width:8em">Chức vụ</th>
+          <th fieldName="DepartmentName" style="width:10em">Phòng ban</th>
+          <th fieldName="Salary" class="text-align-right" style="width:10em; padding-right: 1.5em!important;">Mức lương cơ bản</th>
+          <th fieldName="WorkStatus" style="width:11em;">Tình trạng công việc</th>
         </tr>
       </thead>
+
       <tbody>
         <tr
           v-for="(employee, index) in employees"
@@ -27,17 +28,17 @@
           @dblclick="rowOnDblClick(employee.EmployeeId)"
         >
           <td @dblclick.stop><CheckBox :checked="employee.IsChecked" /></td>
-          <td>{{ (pageNumber - 1) * pageSize + index + 1 }}</td>
-          <td>{{ employee.EmployeeCode }}</td>
-          <td>{{ employee.FullName }}</td>
-          <td>{{ employee.GenderName | genderFormat }}</td>
-          <td>{{ employee.DateOfBirth | dateFormat }}</td>
-          <td>{{ employee.PhoneNumber }}</td>
-          <td>{{ employee.Email }}</td>
-          <td>{{ employee.PositionName }}</td>
-          <td>{{ employee.DepartmentName }}</td>
-          <td>{{ employee.Salary | salaryFormat }}</td>
-          <td>{{ employee.WorkStatus | workStatusFormat }}</td>
+          <td :title="(pageNumber - 1) * pageSize + index + 1">{{ (pageNumber - 1) * pageSize + index + 1 }}</td>
+          <td :title="employee.EmployeeCode">{{ employee.EmployeeCode }}</td>
+          <td :title="employee.FullName">{{ employee.FullName }}</td>
+          <td :title="employee.GenderName">{{ employee.GenderName}}</td>
+          <td :title="employee.DateOfBirth | dateFormat">{{ employee.DateOfBirth | dateFormat }}</td>
+          <td :title="employee.PhoneNumber">{{ employee.PhoneNumber }}</td>
+          <td :title="employee.Email">{{ employee.Email }}</td>
+          <td :title="employee.PositionName">{{ employee.PositionName }}</td>
+          <td :title="employee.DepartmentName">{{ employee.DepartmentName }}</td>
+          <td :title=" employee.Salary | salaryFormat" class="text-align-right" style="padding-right: 1.5em !important;">{{ employee.Salary | salaryFormat }}</td>
+          <td :title="employee.WorkStatusName">{{ employee.WorkStatusName }}</td>
         </tr>
       </tbody>
     </table>
@@ -45,6 +46,7 @@
 </template>
 
 <script>
+// import Loader from "../loader/BaseLoader.vue";
 import CheckBox from "../checkbox-custom/BaseCheckBox.vue";
 export default {
   name: "EmployeeTable",
@@ -76,6 +78,13 @@ export default {
         return 1;
       },
       required: true
+    },
+
+    loading: {
+      type: Boolean,
+      default() {
+        return false;
+      }
     }
   },
 
@@ -99,7 +108,6 @@ export default {
           }
         });
       }
-      console.log(this.selectedList);
       this.$emit("changeSelectedList", this.selectedList);
     },
 
@@ -137,7 +145,7 @@ export default {
 
   watch: {
     /** Hàm quan sát sự thay đổi của prop employees,
-     * khi danh sách employees thay đổi thì cần check xem có phần tử nào 
+     * khi danh sách employees thay đổi thì cần check xem có phần tử nào
      * trong mảng này đã được chọn trước đó hay không
      * CreatedBy: TTAnh(08/08/2021)
      */
@@ -158,7 +166,8 @@ export default {
 <style scoped>
 @import url("../../../css/common/custom-scroll.css");
 .table-custom {
-  width: 100%;
+  /* width: 100%; */
+  position: relative;
   font-size: 13px;
   overflow: auto;
 }
@@ -167,20 +176,25 @@ export default {
   position: sticky;
   top: 0;
   background-color: var(--object-color) !important;
-  width: 100%;
   height: 40px;
   white-space: nowrap;
 }
 
 .table-custom table {
-  width: 100%;
+  width: calc(100vw - var(--menu-width) - 2 * var(--content-padding));
+  /* display: table; */
+  table-layout: fixed;
   border-collapse: collapse;
 }
 
 .table-custom table th,
 td {
+  box-sizing: border-box;
+  padding-right: 0.5em;
+  overflow-x: hidden;
+  text-overflow: ellipsis;
   text-align: left;
-  padding-right: 20px;
+  white-space: nowrap;
 }
 
 .table-custom table tr {
@@ -208,10 +222,6 @@ td {
     background-color: #f2f2f2;
 } */
 
-.table-custom table tbody {
-  white-space: nowrap;
-}
-
 .table-custom .text-align-center {
   text-align: center;
 }
@@ -219,10 +229,17 @@ td {
 .table-custom .text-align-right {
   text-align: right;
   padding-left: 0px !important;
-  padding-right: 30px;
+  /* padding-right: 30px; */
 }
 
 .table-custom .text-align-left {
   text-align: left;
+}
+.table-custom .modal-loader {
+  z-index: 50;
+  position: absolute;
+  top: 0;
+  height: 100%;
+  width: 100%;
 }
 </style>
