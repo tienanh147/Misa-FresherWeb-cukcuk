@@ -1,4 +1,4 @@
-# misa-fresher
+# misa-cukcuk
 
 ## Project setup
 ```
