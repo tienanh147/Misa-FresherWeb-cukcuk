@@ -1,8 +1,8 @@
 import Vue from "vue";
-// import App from "./App.vue";
 import EmployeePage from "./page/EmployeePage.vue";
 import axios from "axios";
 import VueAxios from "vue-axios";
+import EventBus from "./event-bus";
 Vue.use(VueAxios, axios);
 Vue.config.productionTip = false;
 
@@ -12,33 +12,32 @@ Vue.config.productionTip = false;
  * @param {Element} elmnt 
  * CreatedBy: TTAnh(05/08/2021)
  */
-var closeAllSelect = function(elmnt) {
-    /*a function that will close all select boxes in the document,
-    except the current select box:*/
-    var x, y, i, xl, yl, arrNo = [];
-    x = document.getElementsByClassName("select-items");
-    y = document.getElementsByClassName("select-selected");
-    xl = x.length;
-    yl = y.length;
-    for (i = 0; i < yl; i++) {
-        if (elmnt == y[i]) {
-            arrNo.push(i)
-        } else {
-            y[i].classList.remove("select-arrow-active");
-        }
-    }
-    for (i = 0; i < xl; i++) {
-        if (arrNo.indexOf(i)) {
-            x[i].classList.add("select-hide");
-        }
-    }
 
-};
+// var closeAllSelect = function(elmnt) {
+//     /*a function that will close all select boxes in the document,
+//     except the current select box:*/
+//     var x, y, i, xl, yl, arrNo = [];
+//     x = document.getElementsByClassName("select-items");
+//     y = document.getElementsByClassName("select-selected");
+//     xl = x.length;
+//     yl = y.length;
+//     for (i = 0; i < yl; i++) {
+//         if (elmnt == y[i]) {
+//             arrNo.push(i)
+//         } else {
+//             y[i].classList.remove("select-arrow-active");
+//         }
+//     }
+//     for (i = 0; i < xl; i++) {
+//         if (arrNo.indexOf(i)) {
+//             x[i].classList.add("select-hide");
+//         }
+//     }
+
+// };
 
 Vue.mixin({
-    methods: {
-        closeAllSelect
-    },
+
     filters: {
         dateFormat: function(date) {
             date = new Date(date);
@@ -94,4 +93,4 @@ new Vue({
 
 /*if the user clicks anywhere outside the select box,
 then close all select boxes:*/
-document.addEventListener("click", closeAllSelect);
+// document.addEventListener("click", closeAllSelect);
