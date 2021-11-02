@@ -26,6 +26,11 @@ namespace MISA.Core.MISAAttribute
     [AttributeUsage(AttributeTargets.Property)]
     public class MISARequired : Attribute
     {
+        public string PropertyName { get; }
+        public MISARequired(string propertyName)
+        {
+            PropertyName = propertyName;
+        }
 
     }
     /// <summary>
@@ -35,14 +40,40 @@ namespace MISA.Core.MISAAttribute
     public class MISAValidate : Attribute
     {
         public string ValidateType { get; }
+        public string PropertyName { get; }
         public MISAValidate(string validateType)
         {
             ValidateType = validateType;
         }
+        public MISAValidate(string validateType, string propertyName)
+        {
+            ValidateType = validateType;
+            PropertyName = propertyName;
+        }
     }
 
+    /// <summary>
+    /// Attribute của những property không được phép trùng nhau trong database
+    /// </summary>
     [AttributeUsage(AttributeTargets.Property)]
-    public class MISANotUpdate : Attribute
-    { }
+    public class MISAUnique : Attribute
+    {
+        public string PropertyName { get; }
+        public MISAUnique(string propertyName)
+        {
+            PropertyName = propertyName;
+        }
+    }
+
+    /// <summary>
+    ///  Attribute của những property ko được update
+    /// </summary>
+    [AttributeUsage(AttributeTargets.Property)]
+    public class MISANotUpdate : Attribute { }
+
+    [AttributeUsage(AttributeTargets.Property)]
+    public class MISACheckExits : Attribute { }
+
+
 
 }
