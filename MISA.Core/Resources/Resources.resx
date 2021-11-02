@@ -118,7 +118,7 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="MISABadRequestMsg" xml:space="preserve">
-    <value>Dữ liệu gửi lên chưa đúng định dạng !</value>
+    <value>Dữ liệu chưa đúng định dạng !</value>
   </data>
   <data name="MISADeleteFailMsg" xml:space="preserve">
     <value>Xóa không thành công !</value>
@@ -130,19 +130,22 @@
     <value>Trùng lặp trường dữ liệu không cho phép !</value>
   </data>
   <data name="MISADuplicateProperty" xml:space="preserve">
-    <value>Dữ liệu gửi lên đã có trong database !</value>
+    <value>Dữ liệu gửi lên đã tồn tại !</value>
   </data>
   <data name="MISAErrorMessage" xml:space="preserve">
-    <value>Có lỗi xảy ra, vui lòng liên hệ MISA !</value>
+    <value>Có lỗi xảy ra, vui lòng liên hệ MISA hoặc thử lại !</value>
   </data>
   <data name="MISAInsertMsg" xml:space="preserve">
     <value>Thêm mới thành công !</value>
   </data>
   <data name="MISALackOfData" xml:space="preserve">
-    <value>Dữ liệu gửi lên bị thiếu những trường bắt buộc</value>
+    <value>Dữ liệu bị thiếu những trường bắt buộc</value>
   </data>
   <data name="MISANoContentMsg" xml:space="preserve">
     <value>Không có dữ liệu !</value>
+  </data>
+  <data name="MISANotExitsCustomerGroup" xml:space="preserve">
+    <value>Nhóm khách hàng không có trong hệ thống</value>
   </data>
   <data name="MISASqlErrorMsg" xml:space="preserve">
     <value>Truy vấn SQL không thành công !</value>

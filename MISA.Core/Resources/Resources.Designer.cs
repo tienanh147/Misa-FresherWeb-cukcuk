@@ -61,7 +61,7 @@ namespace MISA.Core.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Dữ liệu gửi lên chưa đúng định dạng !.
+        ///   Looks up a localized string similar to Dữ liệu chưa đúng định dạng !.
         /// </summary>
         public static string MISABadRequestMsg {
             get {
@@ -97,7 +97,7 @@ namespace MISA.Core.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Dữ liệu gửi lên đã có trong database !.
+        ///   Looks up a localized string similar to Dữ liệu gửi lên đã tồn tại !.
         /// </summary>
         public static string MISADuplicateProperty {
             get {
@@ -106,7 +106,7 @@ namespace MISA.Core.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Có lỗi xảy ra, vui lòng liên hệ MISA !.
+        ///   Looks up a localized string similar to Có lỗi xảy ra, vui lòng liên hệ MISA hoặc thử lại !.
         /// </summary>
         public static string MISAErrorMessage {
             get {
@@ -124,7 +124,7 @@ namespace MISA.Core.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Dữ liệu gửi lên bị thiếu những trường bắt buộc.
+        ///   Looks up a localized string similar to Dữ liệu bị thiếu những trường bắt buộc.
         /// </summary>
         public static string MISALackOfData {
             get {
@@ -138,6 +138,15 @@ namespace MISA.Core.Resources {
         public static string MISANoContentMsg {
             get {
                 return ResourceManager.GetString("MISANoContentMsg", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Nhóm khách hàng không có trong hệ thống.
+        /// </summary>
+        public static string MISANotExitsCustomerGroup {
+            get {
+                return ResourceManager.GetString("MISANotExitsCustomerGroup", resourceCulture);
             }
         }
         
