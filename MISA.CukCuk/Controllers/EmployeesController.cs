@@ -5,9 +5,11 @@ using MISA.Core.Entities;
 using MISA.Core.Interfaces.Services;
 using MISA.Core.Services;
 using MySqlConnector;
+using OfficeOpenXml;
 using System;
 using System.Collections.Generic;
 using System.Data;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -19,12 +21,12 @@ namespace MISA.CukCuk.Controllers
     {
         #region Fields
         private readonly IEmployeeService _employeeService;
-        
+
         #endregion
 
         #region Constructors
 
-        public EmployeesController(IEmployeeService employeeService, IBaseService<Employee> baseService):base(baseService)
+        public EmployeesController(IEmployeeService employeeService, IBaseService<Employee> baseService) : base(baseService)
         {
             _employeeService = employeeService;
         }
@@ -32,7 +34,8 @@ namespace MISA.CukCuk.Controllers
         #endregion
 
         [HttpGet("employeeSearch")]
-        public IActionResult GetEmployeesByCode([FromQuery]string employeeCode) {
+        public IActionResult GetEmployeesByCode([FromQuery] string employeeCode)
+        {
             try
             {
                 var serviceResult = _baseService.GetByColumn<string>(employeeCode, "EmployeeCode");
@@ -58,7 +61,8 @@ namespace MISA.CukCuk.Controllers
             {
                 var serviceResult = _employeeService.GetEmployeesFilter(pageNumber, pageSize, employeeFilter, departmentId, positionId);
                 return StatusCode(serviceResult.StatusCode, serviceResult.Data);
-            }catch(Exception e)
+            }
+            catch (Exception e)
             {
                 var response = new
                 {
@@ -71,6 +75,7 @@ namespace MISA.CukCuk.Controllers
             }
         }
 
+       
         //#region API
         ///// <summary>
         ///// Thêm thông tin khách hàng mới vào db

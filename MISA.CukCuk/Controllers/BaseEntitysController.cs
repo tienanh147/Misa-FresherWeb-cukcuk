@@ -1,8 +1,12 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
 using MISA.Core.Interfaces.Services;
+using OfficeOpenXml;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
+using System.Reflection;
 using System.Threading.Tasks;
 
 namespace MISA.CukCuk.Controllers
@@ -37,7 +41,7 @@ namespace MISA.CukCuk.Controllers
                 var serviceResult = _baseService.GetNewCode();
                 return StatusCode(serviceResult.StatusCode, serviceResult.Data);
             }
-            catch(Exception e)
+            catch (Exception e)
             {
                 var response = new
                 {
@@ -90,6 +94,12 @@ namespace MISA.CukCuk.Controllers
 
         }
 
+        /// <summary>
+        /// Sửa dữ liệu của đối tượng theo Id
+        /// </summary>
+        /// <param name="entity">Dữ liệu đối tượng dưới dạng Object</param>
+        /// <param name="entityId">Id của đối tượng</param>
+        /// <returns></returns>
         [HttpPut("{entityId}")]
         public IActionResult Update(MISAEntity entity, Guid entityId)
         {
@@ -174,6 +184,12 @@ namespace MISA.CukCuk.Controllers
                 return StatusCode(500, response);
             }
         }
+
+        /// <summary>
+        /// Xóa đối tượng theo Id
+        /// </summary>
+        /// <param name="entityId">Id cảu đối tượng</param>
+        /// <returns></returns>
         [HttpDelete("{entityId}")]
         public IActionResult DeleteById(Guid entityId)
         {
@@ -194,6 +210,8 @@ namespace MISA.CukCuk.Controllers
                 return StatusCode(500, response);
             }
         }
+
        
+
     }
 }
