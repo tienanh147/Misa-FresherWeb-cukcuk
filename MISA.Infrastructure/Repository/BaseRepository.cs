@@ -43,7 +43,7 @@ namespace MISA.Infrastructure.Repository
             var columnsName = new List<string>();
             var columnsParam = new List<string>();
             var parameters = new DynamicParameters();
-            var propNotMap = GetMappingProperties<MISAEntity>(entity, typeof(MISANotMap));
+            var propNotMap = GetMappingProperties(typeof(MISAEntity), typeof(MISANotMap));
             List<PropertyInfo> propMapDatabase = properties.Except(propNotMap).ToList();
             foreach (var prop in propMapDatabase)
             {
@@ -123,6 +123,23 @@ namespace MISA.Infrastructure.Repository
 
         }
 
+        public IEnumerable<MISAEntity> GetAllLimitColumns(List<string> columnNames, bool distinctMode = false)
+        {         
+            string distinct = distinctMode == true ? "DISTINCT" : "";
+            var sqlQuery = $"SELECT {distinct} {String.Join(", ", columnNames.ToArray())} FROM {_tableName}";
+            
+            using (IDbConnection dbConnection = new MySqlConnection(_connectionString))
+            {
+                var entities = dbConnection.Query<MISAEntity>(sqlQuery);
+                if (entities.Count() == 0)
+                {
+                    return default;
+                }
+                return entities;
+            }
+            throw new NotImplementedException();
+        }
+
         public int Update(MISAEntity entity, Guid entityId)
         {
 
@@ -130,8 +147,8 @@ namespace MISA.Infrastructure.Repository
             var columnsName = new List<string>();
             var columnsParam = new List<string>();
             var parameters = new DynamicParameters();
-            var propNotMap = GetMappingProperties<MISAEntity>(entity, typeof(MISANotMap));
-            var propNotUpdate = GetMappingProperties<MISAEntity>(entity, typeof(MISANotUpdate));
+            var propNotMap = GetMappingProperties(typeof(MISAEntity), typeof(MISANotMap));
+            var propNotUpdate = GetMappingProperties(typeof(MISAEntity), typeof(MISANotUpdate));
 
             List<PropertyInfo> propMapDatabase = properties.Except(propNotMap).Except(propNotUpdate).ToList();
             var sqlQuery = $"UPDATE {_tableName} entity SET ";
@@ -144,7 +161,7 @@ namespace MISA.Infrastructure.Repository
                 sqlQuery += $"entity.{propName} = @{propName}, ";
                 parameters.Add($"@{propName}", propValue);
             }
-            parameters.Add($"{_tableName}Id", entityId);
+            parameters.Add($"@{_tableName}Id", entityId);
             sqlQuery = sqlQuery.Remove(sqlQuery.Length - 2, 1);
 
             sqlQuery += $"WHERE entity.{_tableName}Id = @{_tableName}Id";
@@ -158,10 +175,50 @@ namespace MISA.Infrastructure.Repository
             throw new NotImplementedException();
         }
 
+        public int DeleteSeries(List<Guid> entitiesId)
+        {
+            throw new NotImplementedException();
+        }
+
+        public int AddSeries(List<MISAEntity> entities)
+        {
+
+            throw new NotImplementedException();
+        }
+
+
+        /// <summary>
+        /// Lấy ra những property của 1 đối tượng với attribute tương ứng
+        /// </summary>
+        /// <typeparam name="Entity"></typeparam>
+        /// <param name="entity"></param>
+        /// <param name="attribute">Attribute của property cần láy</param>
+        /// <returns>Danh sách các property thỏa mãn</returns>
         private List<PropertyInfo> GetMappingProperties<Entity>(Entity entity, Type attribute)
         {
             List<PropertyInfo> returnProperties = new List<PropertyInfo>();
             var properties = entity.GetType().GetProperties();
+            foreach (var property in properties)
+            {
+                var propAttributeNotMap = property.GetCustomAttribute(attribute, true);
+                if (propAttributeNotMap != null)
+                {
+                    returnProperties.Add(property);
+                }
+            }
+            return returnProperties;
+        }
+
+        /// <summary>
+        /// Lấy ra những property của 1 Type với attribute tương ứng
+        /// </summary>
+        /// <param name="entityType">Type của entity</param>
+        /// <param name="attribute">Attribute của property cần láy</param>
+        /// <returns>Danh sách các property thỏa mãn</returns>
+        private List<PropertyInfo> GetMappingProperties(Type entityType, Type attribute)
+        {
+            List<PropertyInfo> returnProperties = new List<PropertyInfo>();
+            var properties = entityType.GetProperties();
             foreach (var property in properties)
             {
                 var propAttributeNotMap = property.GetCustomAttribute(attribute, true);

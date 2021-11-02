@@ -13,31 +13,13 @@ namespace MISA.Infrastructure.Repository
 {
     public class EmployeeRepository : BaseRepository<Employee>, IEmployeeRepository
     {
-        public EmployeeRepository(IConfiguration configuration):base(configuration)
-        {   
-
-        }
-
-        public IEnumerable<Employee> GetEmployeeByDepartmentId(Guid departmentId)
+        #region Contructor
+        public EmployeeRepository(IConfiguration configuration) : base(configuration)
         {
 
-            throw new NotImplementedException();
         }
+        #endregion
 
-        public IEnumerable<Employee> GetEmployeeByPositionId(Guid positionId)
-        {
-            throw new NotImplementedException();
-        }
-
-        public IEnumerable<Employee> GetEmployeeFilter(int offset, int limit)
-        {
-            throw new NotImplementedException();
-        }
-
-        public IEnumerable<Employee> GetEmployeePaging(int limit, int offset)
-        {
-            throw new NotImplementedException();
-        }
 
         public Object GetEmployeesFilter(int pageOffset, int pageSize, string employeeFilter, string departmentId, string positionId)
         {
@@ -68,5 +50,7 @@ namespace MISA.Infrastructure.Repository
             return filterEmployees;
             throw new NotImplementedException();
         }
+    
+        
     }
 }
