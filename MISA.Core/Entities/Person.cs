@@ -14,14 +14,14 @@ namespace MISA.Core.Entities
         {
         }
         #endregion
+
         #region Property
         public string FirstName { get; set; }
-
         public string LastName { get; set; }
-        [MISARequired]
+        [MISARequired("Tên đầy đủ")]
         public string FullName { get; set; }
 
-        public int? Gender { get; set; }
+        public Gender? Gender { get; set; }
 
         [MISANotMap]
         public string GenderName
@@ -30,30 +30,27 @@ namespace MISA.Core.Entities
             {
                 switch (Gender)
                 {
-                    case 1:
+                    //case 1:
+                    //    return "Nam";
+                    //case 0:
+                    //    return "Nữ";
+                    //case 2:
+                    //    return "Khác";
+                    //default:
+                    //    return null;
+                    case MISA.Core.Enum.Gender.Male:
                         return "Nam";
-                    case 0:
+                    case MISA.Core.Enum.Gender.Female:
                         return "Nữ";
-                    case 2:
+                    case MISA.Core.Enum.Gender.Other:
                         return "Khác";
                     default:
                         return null;
                 }
             }
         }
-
         public string Address { get; set; }
-
-    
         public DateTime? DateOfBirth { get; set; }
-        [MISARequired]
-        [MISAValidate("Email")]
-        public string Email { get; set; }
-        [MISARequired]
-        [MISAValidate("PhoneNumber")]
-        public string PhoneNumber { get; set; }
-
-
         #endregion
     }
 }

@@ -11,7 +11,7 @@ namespace MISA.Core.Entities
         [MISAPrimaryKey]
         public Guid PositionId { get; set; }
 
-        [MISAValidate("Unique")]
+        [MISAUnique("Mã vị trí")]
         public string PositionCode { get; set; }
         public string PositionName { get; set; }
         public string Description { get; set; }
