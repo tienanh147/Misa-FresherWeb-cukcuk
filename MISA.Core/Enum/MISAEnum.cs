@@ -8,7 +8,7 @@ namespace MISA.Core.Enum
     /// Giới tính
     /// </summary>
     /// CreatedBy: TTAnh(17/08/2021)
-    public enum Gender
+    public enum Gender: int
     {
         Male=1,
         Female=0,
@@ -26,7 +26,7 @@ namespace MISA.Core.Enum
         Working=1,
         /// <summary>
         /// Thôi việc
-        /// </summary>
+        /// </summary>  
         QuitJob=2,
         /// <summary>
         /// Nghỉ phép
@@ -35,13 +35,11 @@ namespace MISA.Core.Enum
         /// <summary>
         /// Đuổi việc
         /// </summary>
-        Fire=4,
-
-        None=0
+        Fire=4
    
     }
 
-    public enum ValidateType
+    public enum PropertyName
     {
         Unique = 1,
 
